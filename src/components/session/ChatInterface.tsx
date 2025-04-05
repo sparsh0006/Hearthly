@@ -118,7 +118,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
           />
           <div className="flex ml-2">
             <button 
-              className={`p-2 rounded-full ${isDarkMode ? 'bg-gray-700' : 'bg-gray-200'} mr-2`}
+              className={`p-2 rounded-full ${isDarkMode ? 'bg-gray-700' : 'bg-gray-200'} mr-2 w-10 h-10 flex items-center justify-center`}
               onClick={onMicClick}  // Changed to use onMicClick which will close the chat
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={isDarkMode ? 'white' : 'black'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -129,7 +129,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
               </svg>
             </button>
             <button 
-              className="p-2 rounded-full bg-calmi-orange"
+              className="p-2 rounded-full bg-calmi-orange w-10 h-10 flex items-center justify-center"
               onClick={handleSendMessage}
             >
               <svg

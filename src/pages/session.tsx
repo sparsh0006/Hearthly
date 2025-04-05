@@ -41,6 +41,9 @@ const SessionPage: React.FC = () => {
       startSessionListening();
     } else if (status === 'listening') {
       stopSessionListening();
+    } else {
+      // This allows clicking mic again after stopping
+      startSessionListening();
     }
   };
   
@@ -61,6 +64,11 @@ const SessionPage: React.FC = () => {
   
   const handleTextCancel = () => {
     setShowTextInput(false);
+  };
+  
+  const handleCancelClick = () => {
+    // Add session when cancel button is clicked
+    cancelSession();
   };
   
   if (showChat) {
@@ -98,13 +106,13 @@ const SessionPage: React.FC = () => {
           {message}
         </p>
         
-        <AudioWaveform isListening={status === 'listening'} />
+        <AudioWaveform isListening={status === 'listening'} isDarkMode={isDarkMode} />
         
         <SessionControls 
           status={status}
           onMicClick={handleMicClick}
           onTextClick={handleTextClick}
-          onCancelClick={cancelSession}
+          onCancelClick={handleCancelClick}
           isDarkMode={isDarkMode}
         />
         

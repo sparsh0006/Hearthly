@@ -29,25 +29,25 @@ const Sidebar: React.FC<SidebarProps> = ({ isDarkMode = false }) => {
             <li>
               <Link href="/" className={`flex items-center px-5 py-2 ${isDarkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'}`}>
                 <HomeIcon className="mr-3" size={20} color={isDarkMode ? 'white' : 'black'} />
-                <span>home</span>
+                <span>Home</span>
               </Link>
             </li>
             <li>
               <Link href="/profile" className={`flex items-center px-5 py-2 ${isDarkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'}`}>
                 <ProfileIcon className="mr-3" size={20} color={isDarkMode ? 'white' : 'black'} />
-                <span>profile</span>
+                <span>Profile</span>
               </Link>
             </li>
             <li>
               <Link href="/history" className={`flex items-center px-5 py-2 ${isDarkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'}`}>
                 <HistoryIcon className="mr-3" size={20} color={isDarkMode ? 'white' : 'black'} />
-                <span>session history</span>
+                <span>Session History</span>
               </Link>
             </li>
             <li>
               <Link href="/feedback" className={`flex items-center px-5 py-2 ${isDarkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'}`}>
                 <FeedbackIcon className="mr-3" size={20} color={isDarkMode ? 'white' : 'black'} />
-                <span>feedback</span>
+                <span>Feedback</span>
               </Link>
             </li>
           </ul>
@@ -57,11 +57,11 @@ const Sidebar: React.FC<SidebarProps> = ({ isDarkMode = false }) => {
       <div className="p-5 space-y-4">
         <Link href="/settings" className={`flex items-center ${isDarkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'} p-2`}>
           <SettingsIcon className="mr-3" size={20} color={isDarkMode ? 'white' : 'black'} />
-          <span>settings</span>
+          <span>Settings</span>
         </Link>
         <Link href="/logout" className={`flex items-center ${isDarkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'} p-2`}>
           <LogoutIcon className="mr-3" size={20} color={isDarkMode ? 'white' : 'black'} />
-          <span>log out</span>
+          <span>Log out</span>
         </Link>
         
         <div className="mt-4">
