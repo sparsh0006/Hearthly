@@ -8,6 +8,7 @@ import { useAudio } from '../hooks/useAudio';
 import CloudyCircle from "../components/session/CloudyCircle";
 import FluidCircle from '../components/session/FluidCircle';
 import { useTheme } from '../contexts/ThemeContext';
+import ChatInterface from '../components/session/ChatInterface';
 
 const SessionPage: React.FC = () => {
   const { sessionState, startListening: startSessionListening, stopListening: stopSessionListening, cancelSession } = useSession();
@@ -15,6 +16,7 @@ const SessionPage: React.FC = () => {
   const [showTextInput, setShowTextInput] = useState(false);
   const { status, message } = sessionState;
   const { isDarkMode } = useTheme();
+  const [showChat, setShowChat] = useState(false);
   
   // Add this to fix the errors - determine if the system is responding
   // When status is 'processing' or 'responding', isActive should be true
@@ -29,6 +31,12 @@ const SessionPage: React.FC = () => {
   }, [status, isListening, startAudioListening, stopAudioListening]);
   
   const handleMicClick = () => {
+    if (showChat) {
+      // If chat is open, close it (formerly cancel button functionality)
+      setShowChat(false);
+      return;
+    }
+    
     if (status === 'idle') {
       startSessionListening();
     } else if (status === 'listening') {
@@ -37,7 +45,7 @@ const SessionPage: React.FC = () => {
   };
   
   const handleTextClick = () => {
-    setShowTextInput(true);
+    setShowChat(true);
   };
   
   const handleTextSend = (text: string) => {
@@ -54,6 +62,21 @@ const SessionPage: React.FC = () => {
   const handleTextCancel = () => {
     setShowTextInput(false);
   };
+  
+  if (showChat) {
+    return (
+      <MainLayout>
+        <div className="h-[calc(100vh-100px)]">
+          <ChatInterface 
+            isOpen={showChat} 
+            onClose={() => setShowChat(false)} 
+            isDarkMode={isDarkMode}
+            onMicClick={handleMicClick}
+          />
+        </div>
+      </MainLayout>
+    );
+  }
   
   return (
     <MainLayout>

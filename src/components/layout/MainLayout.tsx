@@ -16,10 +16,20 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     <div className={`flex h-screen ${isDarkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'}`}>
       {/* Mobile sidebar toggle */}
       <button 
-        className="lg:hidden fixed top-4 left-4 z-50 p-2 rounded-full bg-white shadow-md"
+        className={`lg:hidden fixed top-4 left-4 z-50 p-2 rounded-md ${
+          isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'
+        } shadow-md`}
         onClick={() => setShowSidebar(!showSidebar)}
       >
-        {showSidebar ? '✕' : '☰'}
+        {showSidebar ? (
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 18L18 6M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        ) : (
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 6H20M4 12H20M4 18H20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        )}
       </button>
       
       {/* Sidebar - hidden on mobile unless toggled */}
