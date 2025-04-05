@@ -1,90 +1,130 @@
 import { motion } from "framer-motion";
-import React, { useState } from "react";
+import React, { useMemo } from "react";
 
 interface CloudyCircleProps {
   isActive?: boolean; // Whether it's responding (faster animation) or idle/listening
 }
 
 const CloudyCircle: React.FC<CloudyCircleProps> = ({ isActive = false }) => {
-  // Use more particles for denser clouds
-  const particleCount = 8;
-  const particles = Array.from({ length: particleCount });
+  // Very high particle count for extreme density
+  const particleCount = 45;
   
-  // Animation speeds based on state
-  const baseSpeed = isActive ? 2 : 4; // Faster when active (responding)
-  const baseDuration = isActive ? 2.5 : 5;
+  // Dramatically different speeds based on state
+  const speedFactor = isActive ? 0.5 : 1.2; // Lower = faster
   
-  // Create more complex and varied blob shapes for a natural cloud effect
-  const generateBlobPath = (index: number) => {
-    const randomOffset = () => Math.random() * 10 - 5;
-    const center = 50 + randomOffset();
-    const radius = 20 + (index % 3) * 5;
+  // Generate complex, irregular smoke shapes for more natural movement
+  const generateRandomSmokePath = (index: number) => {
+    // Random positioning within the circle
+    const centerX = 50 + (Math.random() * 30 - 15);
+    const centerY = 50 + (Math.random() * 30 - 15);
+    const size = 15 + Math.random() * 20;
     
-    // Create more control points for complex shapes
-    let path = `M${center - radius} ${center}`;
+    // Create varied, random control points
+    const points = [];
+    const numPoints = 5 + Math.floor(Math.random() * 4);
     
-    // Add 6-8 control points for more organic shapes
-    const points = 6 + Math.floor(Math.random() * 3);
-    for (let i = 0; i < points; i++) {
-      const angle = (i / points) * Math.PI * 2;
-      const nextAngle = ((i + 1) / points) * Math.PI * 2;
+    for (let i = 0; i < numPoints; i++) {
+      const angle = (i / numPoints) * Math.PI * 2;
+      const radius = size * (0.7 + Math.random() * 0.6);
       
-      const r1 = radius * (0.8 + Math.random() * 0.4);
-      const r2 = radius * (0.8 + Math.random() * 0.4);
+      const x = centerX + radius * Math.cos(angle);
+      const y = centerY + radius * Math.sin(angle);
       
-      const cx1 = center + r1 * Math.cos(angle) + randomOffset();
-      const cy1 = center + r1 * Math.sin(angle) + randomOffset();
+      // Add some random variation to control points
+      const cpRadius = radius * (0.8 + Math.random() * 0.4);
+      const cpAngle1 = angle - 0.3 + Math.random() * 0.2;
+      const cpAngle2 = angle + 0.3 + Math.random() * 0.2;
       
-      const cx2 = center + r2 * Math.cos(nextAngle) + randomOffset();
-      const cy2 = center + r2 * Math.sin(nextAngle) + randomOffset();
+      const cp1x = centerX + cpRadius * Math.cos(cpAngle1);
+      const cp1y = centerY + cpRadius * Math.sin(cpAngle1);
+      const cp2x = centerX + cpRadius * Math.cos(cpAngle2);
+      const cp2y = centerY + cpRadius * Math.sin(cpAngle2);
       
-      path += ` Q${cx1} ${cy1} ${cx2} ${cy2}`;
+      points.push({ x, y, cp1x, cp1y, cp2x, cp2y });
     }
     
-    path += " Z";
+    // Build the path
+    let path = `M${points[0].x},${points[0].y}`;
+    
+    for (let i = 0; i < points.length; i++) {
+      const current = points[i];
+      const next = points[(i + 1) % points.length];
+      path += ` C${current.cp2x},${current.cp2y} ${next.cp1x},${next.cp1y} ${next.x},${next.y}`;
+    }
+    
     return path;
   };
   
-  // Animation variants with more dynamic movement
-  const blobVariants = {
-    animate: (i: number) => ({
-      // More complex transformations for a swirling, windy effect
-      x: [0, 5, -5, 3, -2, 0],
-      y: [0, -3, 4, -4, 2, 0],
-      scale: [1, 1.1, 0.95, 1.05, 1],
-      rotate: [0, 10, -5, 8, 0],
-      opacity: [0.4, 0.7, 0.5, 0.65, 0.4],
-      filter: ["blur(3px)", "blur(4px)", "blur(2px)", "blur(3px)"],
-      transition: {
-        duration: baseDuration + (i % 3), 
-        repeat: Infinity,
-        repeatType: "loop",
-        ease: "easeInOut",
-        times: [0, 0.2, 0.4, 0.7, 1],
-        // Faster transitions create the wind-like effect
-        type: "tween",
-      },
-    }),
-  };
+  // Pre-generate smoke paths to avoid regeneration on each render
+  const smokePaths = useMemo(() => {
+    return Array.from({ length: particleCount }).map((_, i) => generateRandomSmokePath(i));
+  }, [particleCount]);
+  
+  // Generate random animation variants for each smoke particle
+interface AnimationVariant {
+    x: number[];
+    y: number[];
+    opacity: number[];
+    scale: number[];
+    rotate: number[];
+}
+
+const getRandomAnimationVariant = (index: number): AnimationVariant => {
+    // Create completely random movement directions
+    const xMovement: number[] = [];
+    const yMovement: number[] = [];
+    const opacityFlow: number[] = [];
+    const scaleChanges: number[] = [];
+    const rotateValues: number[] = [];
+    
+    // Create 5-7 random keyframes
+    const keyframes: number = 5 + Math.floor(Math.random() * 3);
+    
+    for (let i = 0; i < keyframes; i++) {
+        xMovement.push(Math.random() * 30 - 15);  // -15 to +15
+        yMovement.push(Math.random() * 30 - 15);  // -15 to +15
+        
+        // More dramatic for the middle frames, subtle for start/end
+        const framePosition: number = i / (keyframes - 1);  // 0 to 1
+        const intensityFactor: number = Math.sin(framePosition * Math.PI);  // Peaks in the middle
+        
+        opacityFlow.push(0.2 + intensityFactor * 0.4);  // 0.2-0.6
+        
+        // Scale changes 
+        scaleChanges.push(0.9 + intensityFactor * 0.3);  // 0.9-1.2
+        
+        // Rotation
+        rotateValues.push(Math.random() * 30 - 15);  // -15 to +15 degrees
+    }
+    
+    return {
+        x: xMovement,
+        y: yMovement,
+        opacity: opacityFlow,
+        scale: scaleChanges,
+        rotate: rotateValues
+    };
+};
 
   return (
     <div
       style={{
         width: "200px",
-        height: "200px",
+        height: "200px", 
         borderRadius: "50%",
         overflow: "hidden",
         position: "relative",
-        background: "#222", // Darker background
+        background: "#0a0a0a", // Very dark background
       }}
     >
-      {/* Background gradient for depth */}
-      <div 
+      {/* Dark base gradient */}
+      <div
         style={{
           position: "absolute",
           width: "100%",
           height: "100%",
-          background: "radial-gradient(circle, rgba(100,100,100,0.3) 0%, rgba(50,50,50,0.2) 70%, rgba(30,30,30,0.1) 100%)",
+          background: "radial-gradient(circle, rgba(25,25,25,0.8) 10%, rgba(15,15,15,0.6) 30%, rgba(5,5,5,0.3) 70%)",
+          mixBlendMode: "multiply"
         }}
       />
       
@@ -95,57 +135,210 @@ const CloudyCircle: React.FC<CloudyCircleProps> = ({ isActive = false }) => {
         style={{ position: "absolute", top: 0, left: 0 }}
       >
         <defs>
-          {/* Multiple gradients for varied cloud colors */}
-          <radialGradient id="cloudGradient1" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" style={{ stopColor: "#aaa", stopOpacity: 0.7 }} />
-            <stop offset="100%" style={{ stopColor: "#444", stopOpacity: 0.4 }} />
-          </radialGradient>
-          
-          <radialGradient id="cloudGradient2" cx="40%" cy="60%" r="60%">
+          {/* Multiple gradients for smoke variation */}
+          <radialGradient id="smokeGrad1" cx="50%" cy="50%" r="50%">
             <stop offset="0%" style={{ stopColor: "#999", stopOpacity: 0.6 }} />
-            <stop offset="100%" style={{ stopColor: "#333", stopOpacity: 0.3 }} />
+            <stop offset="40%" style={{ stopColor: "#777", stopOpacity: 0.4 }} />
+            <stop offset="70%" style={{ stopColor: "#444", stopOpacity: 0.2 }} />
+            <stop offset="100%" style={{ stopColor: "#222", stopOpacity: 0 }} />
           </radialGradient>
           
-          <filter id="cloudBlur" x="-50%" y="-50%" width="200%" height="200%">
+          <radialGradient id="smokeGrad2" cx="50%" cy="50%" r="60%">
+            <stop offset="0%" style={{ stopColor: "#888", stopOpacity: 0.5 }} />
+            <stop offset="50%" style={{ stopColor: "#666", stopOpacity: 0.3 }} />
+            <stop offset="100%" style={{ stopColor: "#333", stopOpacity: 0 }} />
+          </radialGradient>
+          
+          <radialGradient id="smokeGrad3" cx="50%" cy="50%" r="70%">
+            <stop offset="0%" style={{ stopColor: "#777", stopOpacity: 0.4 }} />
+            <stop offset="40%" style={{ stopColor: "#555", stopOpacity: 0.3 }} />
+            <stop offset="100%" style={{ stopColor: "#222", stopOpacity: 0 }} />
+          </radialGradient>
+          
+          <radialGradient id="lightSmoke" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" style={{ stopColor: "#bbb", stopOpacity: 0.5 }} />
+            <stop offset="60%" style={{ stopColor: "#999", stopOpacity: 0.2 }} />
+            <stop offset="100%" style={{ stopColor: "#777", stopOpacity: 0 }} />
+          </radialGradient>
+          
+          <radialGradient id="darkSmoke" cx="50%" cy="50%" r="60%">
+            <stop offset="0%" style={{ stopColor: "#555", stopOpacity: 0.6 }} />
+            <stop offset="50%" style={{ stopColor: "#333", stopOpacity: 0.3 }} />
+            <stop offset="100%" style={{ stopColor: "#111", stopOpacity: 0 }} />
+          </radialGradient>
+          
+          {/* Heavy blur for smoky effect */}
+          <filter id="blurBig" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="3" />
+          </filter>
+          
+          <filter id="blurMedium" x="-50%" y="-50%" width="200%" height="200%">
             <feGaussianBlur in="SourceGraphic" stdDeviation="2" />
+          </filter>
+          
+          <filter id="blurSmall" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="1" />
+          </filter>
+          
+          {/* Displacement map for more organic movement */}
+          <filter id="displace">
+            <feTurbulence type="turbulence" baseFrequency="0.01" numOctaves="3" result="turbulence" />
+            <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="5" xChannelSelector="R" yChannelSelector="G" />
           </filter>
         </defs>
 
-        {/* Generate multiple cloud blobs with varied paths */}
-        {particles.map((_, i) => (
-          <motion.path
-            key={i}
-            d={generateBlobPath(i)}
-            fill={i % 2 === 0 ? "url(#cloudGradient1)" : "url(#cloudGradient2)"}
-            filter="url(#cloudBlur)"
-            custom={i}
-            variants={blobVariants}
-            animate="animate"
-            style={{ 
-              mixBlendMode: "soft-light", 
-              transformOrigin: "center",
-            }}
-          />
-        ))}
-
-        {/* Extra overlay layer for texture */}
-        <motion.circle
+        {/* Base mask circle */}
+        <circle cx="50" cy="50" r="43" fill="#121212" />
+        
+        {/* Deep background smoke (large, slow) */}
+        {smokePaths.slice(0, 10).map((path, i) => {
+          const animation = getRandomAnimationVariant(i);
+          const duration = (7 + i % 5) * speedFactor;
+          const delay = i * 0.1;
+          const fill = i % 3 === 0 ? "url(#smokeGrad1)" : i % 3 === 1 ? "url(#smokeGrad2)" : "url(#smokeGrad3)";
+          
+          return (
+            <motion.path
+              key={`deep-${i}`}
+              d={path}
+              fill={fill}
+              filter="url(#blurBig)"
+              initial={{ opacity: 0 }}
+              animate={{
+                x: animation.x,
+                y: animation.y,
+                opacity: animation.opacity,
+                scale: animation.scale,
+                rotate: animation.rotate
+              }}
+              transition={{
+                duration: duration,
+                delay: delay,
+                repeat: Infinity,
+                repeatType: "reverse",
+                ease: "easeInOut"
+              }}
+              style={{ 
+                transformOrigin: "center",
+                mixBlendMode: "multiply"
+              }}
+            />
+          );
+        })}
+        
+        {/* Mid-layer smoke (medium, moderate speed) */}
+        {smokePaths.slice(10, 25).map((path, i) => {
+          const animation = getRandomAnimationVariant(i + 10);
+          const duration = (6 + i % 4) * speedFactor;
+          const delay = i * 0.08;
+          const fill = i % 2 === 0 ? "url(#darkSmoke)" : "url(#smokeGrad3)";
+          
+          return (
+            <motion.path
+              key={`mid-${i}`}
+              d={path}
+              fill={fill}
+              filter="url(#blurMedium)"
+              initial={{ opacity: 0 }}
+              animate={{
+                x: animation.x,
+                y: animation.y,
+                opacity: animation.opacity,
+                scale: animation.scale,
+                rotate: animation.rotate
+              }}
+              transition={{
+                duration: duration,
+                delay: delay,
+                repeat: Infinity,
+                repeatType: "mirror",
+                ease: "easeInOut"
+              }}
+              style={{ 
+                transformOrigin: "center",
+                mixBlendMode: "multiply"
+              }}
+            />
+          );
+        })}
+        
+        {/* Foreground smoke (small, fast) */}
+        {smokePaths.slice(25).map((path, i) => {
+          const animation = getRandomAnimationVariant(i + 25);
+          const duration = (4 + i % 3) * speedFactor;
+          const delay = i * 0.06;
+          const fill = i % 2 === 0 ? "url(#lightSmoke)" : "url(#smokeGrad1)";
+          
+          return (
+            <motion.path
+              key={`front-${i}`}
+              d={path}
+              fill={fill}
+              filter="url(#blurSmall)"
+              initial={{ opacity: 0 }}
+              animate={{
+                x: animation.x,
+                y: animation.y,
+                opacity: animation.opacity.map(v => v * 0.7), // Slightly more transparent
+                scale: animation.scale,
+                rotate: animation.rotate
+              }}
+              transition={{
+                duration: duration,
+                delay: delay,
+                repeat: Infinity,
+                repeatType: "mirror",
+                ease: "easeInOut"
+              }}
+              style={{ 
+                transformOrigin: "center",
+                mixBlendMode: "screen"
+              }}
+            />
+          );
+        })}
+        
+        {/* Additional tendrils/wisps for detail */}
+        {Array.from({ length: 8 }).map((_, i) => {
+          const startX = 30 + Math.random() * 40;
+          const startY = 30 + Math.random() * 40;
+          const endX = startX + (Math.random() * 30 - 15);
+          const endY = startY + (Math.random() * 30 - 15);
+          const ctrlX = (startX + endX) / 2 + (Math.random() * 20 - 10);
+          const ctrlY = (startY + endY) / 2 + (Math.random() * 20 - 10);
+          
+          return (
+            <motion.path
+              key={`wisp-${i}`}
+              d={`M${startX},${startY} Q${ctrlX},${ctrlY} ${endX},${endY}`}
+              stroke="rgba(200,200,200,0.15)"
+              strokeWidth="0.5"
+              fill="none"
+              filter="url(#blurSmall)"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={{
+                pathLength: [0, 1, 0],
+                opacity: [0, 0.3, 0]
+              }}
+              transition={{
+                duration: (4 + i) * speedFactor,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: i * 0.2
+              }}
+            />
+          );
+        })}
+        
+        {/* Edge vignette for depth */}
+        <circle
           cx="50"
           cy="50"
-          r="35"
+          r="43"
           fill="none"
-          stroke="rgba(255,255,255,0.05)"
-          strokeWidth="1"
-          animate={{
-            scale: [1, 1.1, 1],
-            opacity: [0.1, 0.2, 0.1],
-            transition: {
-              duration: baseSpeed,
-              repeat: Infinity,
-              repeatType: "loop",
-              ease: "easeInOut",
-            }
-          }}
+          stroke="#0a0a0a"
+          strokeWidth="6"
+          style={{ opacity: 0.6 }}
         />
       </motion.svg>
     </div>
