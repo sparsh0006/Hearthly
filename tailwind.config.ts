@@ -1,19 +1,16 @@
-import type { Config } from "tailwindcss";
-
-const config: Config = {
+module.exports = {
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    './src/pages/**/*.{js,ts,jsx,tsx}',
+    './src/components/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        'calmi-orange': '#FFD700', // The yellow/orange color from the design
+        'calmi-dark': '#1A1A1A',
+        'calmi-light': '#FFFFFF',
       },
     },
   },
   plugins: [],
-};
-export default config;
+}
