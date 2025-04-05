@@ -17,11 +17,11 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const [languageDropdownOpen, setLanguageDropdownOpen] = useState(false);
   
   return (
-    <div className={`flex h-screen ${isDarkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'}`}>
+    <div className={`flex h-screen ${isDarkMode ? 'bg-calmi-dark text-white' : 'bg-white text-gray-900'}`}>
       {/* Mobile sidebar toggle */}
       <button 
         className={`lg:hidden fixed top-4 left-4 z-50 p-2 rounded-md ${
-          isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'
+          isDarkMode ? 'bg-calmi-dark-secondary text-white' : 'bg-white text-black'
         } shadow-md`}
         onClick={() => setShowSidebar(!showSidebar)}
       >

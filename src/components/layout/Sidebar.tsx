@@ -18,7 +18,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isDarkMode = false }) => {
   const { sessionCount } = useSession();
   
   return (
-    <div className={`w-60 h-screen border-r ${isDarkMode ? 'border-gray-700 bg-gray-800 text-white' : 'border-gray-200 bg-white text-gray-900'} flex flex-col justify-between`}>
+    <div className={`w-60 h-screen border-r ${isDarkMode ? 'border-gray-700 bg-calmi-dark-secondary text-white' : 'border-gray-200 bg-white text-gray-900'} flex flex-col justify-between`}>
       <div>
         <div className="p-5">
           <h1 className="text-2xl font-bold">Hearthly </h1>

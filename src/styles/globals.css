@@ -6,7 +6,7 @@
   --bg-primary: #FFFFFF;
   --text-primary: #1A1A1A;
   --bg-secondary: #F5F5F5;
-  --calmi-orange: #FFD700;
+  --calmi-orange: #B2A4FF; /* it is calmi purple not orange */
 }
 
 /* Dark mode variables will be set via ThemeContext.tsx */

@@ -28,7 +28,6 @@ const LanguageDropdown: React.FC<LanguageDropdownProps> = ({
     { code: 'es', name: 'Spanish' },
     { code: 'fr', name: 'French' },
     { code: 'ar', name: 'Arabic' },
-    { code: 'bn', name: 'Bengali' },
     { code: 'pt', name: 'Portuguese' },
     { code: 'ru', name: 'Russian' },
     { code: 'ur', name: 'Urdu' },

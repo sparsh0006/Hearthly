@@ -3,11 +3,15 @@ import React, { useMemo } from "react";
 
 interface CloudyCircleProps {
   isActive?: boolean; // Whether it's responding (faster animation) or idle/listening
+  isDarkMode?: boolean; // New prop for dark/light mode
 }
 
-const CloudyCircle: React.FC<CloudyCircleProps> = ({ isActive = false }) => {
+const CloudyCircle: React.FC<CloudyCircleProps> = ({ 
+  isActive = false,
+  isDarkMode = false // Default to light mode
+}) => {
   // Very high particle count for extreme density
-  const particleCount = 45;
+  const particleCount = 40;
   
   // Dramatically different speeds based on state
   const speedFactor = isActive ? 0.5 : 1.2; // Lower = faster
@@ -106,6 +110,15 @@ const getRandomAnimationVariant = (index: number): AnimationVariant => {
     };
 };
 
+  // Background color based on theme
+  const bgColor = isDarkMode ? "#0a0a0a" : "#CDC1FF";
+  
+  // Base circle color
+  const baseCircleColor = isDarkMode ? "#121212" : "#d4ebff";
+  
+  // Edge color
+  const edgeColor = isDarkMode ? "#0a0a0a" : "#c0e0ff";
+
   return (
     <div
       style={{
@@ -114,16 +127,18 @@ const getRandomAnimationVariant = (index: number): AnimationVariant => {
         borderRadius: "50%",
         overflow: "hidden",
         position: "relative",
-        background: "#0a0a0a", // Very dark background
+        background: bgColor,
       }}
     >
-      {/* Dark base gradient */}
+      {/* Base gradient */}
       <div
         style={{
           position: "absolute",
           width: "100%",
           height: "100%",
-          background: "radial-gradient(circle, rgba(25,25,25,0.8) 10%, rgba(15,15,15,0.6) 30%, rgba(5,5,5,0.3) 70%)",
+          background: isDarkMode 
+            ? "radial-gradient(circle, rgba(25,25,25,0.8) 10%, rgba(15,15,15,0.6) 30%, rgba(5,5,5,0.3) 70%)"
+            : "radial-gradient(circle, rgba(220,240,255,0.8) 10%, rgba(200,230,255,0.6) 30%, rgba(180,220,255,0.3) 70%)",
           mixBlendMode: "multiply"
         }}
       />
@@ -135,36 +150,36 @@ const getRandomAnimationVariant = (index: number): AnimationVariant => {
         style={{ position: "absolute", top: 0, left: 0 }}
       >
         <defs>
-          {/* Multiple gradients for smoke variation */}
+          {/* Multiple gradients for smoke variation - Updated for blue particles */}
           <radialGradient id="smokeGrad1" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" style={{ stopColor: "#999", stopOpacity: 0.6 }} />
-            <stop offset="40%" style={{ stopColor: "#777", stopOpacity: 0.4 }} />
-            <stop offset="70%" style={{ stopColor: "#444", stopOpacity: 0.2 }} />
-            <stop offset="100%" style={{ stopColor: "#222", stopOpacity: 0 }} />
+            <stop offset="0%" style={{ stopColor: isDarkMode ? "#999" : "#4287f5", stopOpacity: 0.6 }} />
+            <stop offset="40%" style={{ stopColor: isDarkMode ? "#777" : "#2970e3", stopOpacity: 0.4 }} />
+            <stop offset="70%" style={{ stopColor: isDarkMode ? "#444" : "#1a5dc7", stopOpacity: 0.2 }} />
+            <stop offset="100%" style={{ stopColor: isDarkMode ? "#222" : "#0d4bb3", stopOpacity: 0 }} />
           </radialGradient>
           
           <radialGradient id="smokeGrad2" cx="50%" cy="50%" r="60%">
-            <stop offset="0%" style={{ stopColor: "#888", stopOpacity: 0.5 }} />
-            <stop offset="50%" style={{ stopColor: "#666", stopOpacity: 0.3 }} />
-            <stop offset="100%" style={{ stopColor: "#333", stopOpacity: 0 }} />
+            <stop offset="0%" style={{ stopColor: isDarkMode ? "#888" : "#5a9af5", stopOpacity: 0.5 }} />
+            <stop offset="50%" style={{ stopColor: isDarkMode ? "#666" : "#3a85f0", stopOpacity: 0.3 }} />
+            <stop offset="100%" style={{ stopColor: isDarkMode ? "#333" : "#1e6de0", stopOpacity: 0 }} />
           </radialGradient>
           
           <radialGradient id="smokeGrad3" cx="50%" cy="50%" r="70%">
-            <stop offset="0%" style={{ stopColor: "#777", stopOpacity: 0.4 }} />
-            <stop offset="40%" style={{ stopColor: "#555", stopOpacity: 0.3 }} />
-            <stop offset="100%" style={{ stopColor: "#222", stopOpacity: 0 }} />
+            <stop offset="0%" style={{ stopColor: isDarkMode ? "#777" : "#6babf7", stopOpacity: 0.4 }} />
+            <stop offset="40%" style={{ stopColor: isDarkMode ? "#555" : "#4a96f2", stopOpacity: 0.3 }} />
+            <stop offset="100%" style={{ stopColor: isDarkMode ? "#222" : "#2980ea", stopOpacity: 0 }} />
           </radialGradient>
           
           <radialGradient id="lightSmoke" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" style={{ stopColor: "#bbb", stopOpacity: 0.5 }} />
-            <stop offset="60%" style={{ stopColor: "#999", stopOpacity: 0.2 }} />
-            <stop offset="100%" style={{ stopColor: "#777", stopOpacity: 0 }} />
+            <stop offset="0%" style={{ stopColor: isDarkMode ? "#bbb" : "#8fc1ff", stopOpacity: 0.5 }} />
+            <stop offset="60%" style={{ stopColor: isDarkMode ? "#999" : "#70b0ff", stopOpacity: 0.2 }} />
+            <stop offset="100%" style={{ stopColor: isDarkMode ? "#777" : "#4c99fc", stopOpacity: 0 }} />
           </radialGradient>
           
           <radialGradient id="darkSmoke" cx="50%" cy="50%" r="60%">
-            <stop offset="0%" style={{ stopColor: "#555", stopOpacity: 0.6 }} />
-            <stop offset="50%" style={{ stopColor: "#333", stopOpacity: 0.3 }} />
-            <stop offset="100%" style={{ stopColor: "#111", stopOpacity: 0 }} />
+            <stop offset="0%" style={{ stopColor: isDarkMode ? "#555" : "#3d7ddb", stopOpacity: 0.6 }} />
+            <stop offset="50%" style={{ stopColor: isDarkMode ? "#333" : "#2b6bc8", stopOpacity: 0.3 }} />
+            <stop offset="100%" style={{ stopColor: isDarkMode ? "#111" : "#1959b3", stopOpacity: 0 }} />
           </radialGradient>
           
           {/* Heavy blur for smoky effect */}
@@ -188,7 +203,7 @@ const getRandomAnimationVariant = (index: number): AnimationVariant => {
         </defs>
 
         {/* Base mask circle */}
-        <circle cx="50" cy="50" r="43" fill="#121212" />
+        <circle cx="50" cy="50" r="43" fill={baseCircleColor} />
         
         {/* Deep background smoke (large, slow) */}
         {smokePaths.slice(0, 10).map((path, i) => {
@@ -220,7 +235,7 @@ const getRandomAnimationVariant = (index: number): AnimationVariant => {
               }}
               style={{ 
                 transformOrigin: "center",
-                mixBlendMode: "multiply"
+                mixBlendMode: isDarkMode ? "multiply" : "screen"
               }}
             />
           );
@@ -256,7 +271,7 @@ const getRandomAnimationVariant = (index: number): AnimationVariant => {
               }}
               style={{ 
                 transformOrigin: "center",
-                mixBlendMode: "multiply"
+                mixBlendMode: isDarkMode ? "multiply" : "screen"
               }}
             />
           );
@@ -311,7 +326,7 @@ const getRandomAnimationVariant = (index: number): AnimationVariant => {
             <motion.path
               key={`wisp-${i}`}
               d={`M${startX},${startY} Q${ctrlX},${ctrlY} ${endX},${endY}`}
-              stroke="rgba(200,200,200,0.15)"
+              stroke={isDarkMode ? "rgba(200,200,200,0.15)" : "rgba(100,150,255,0.3)"}
               strokeWidth="0.5"
               fill="none"
               filter="url(#blurSmall)"
@@ -336,7 +351,7 @@ const getRandomAnimationVariant = (index: number): AnimationVariant => {
           cy="50"
           r="43"
           fill="none"
-          stroke="#0a0a0a"
+          stroke={edgeColor}
           strokeWidth="6"
           style={{ opacity: 0.6 }}
         />

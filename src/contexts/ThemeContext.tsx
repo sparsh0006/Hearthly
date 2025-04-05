@@ -31,7 +31,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     
     // Set CSS variables for theme colors
     if (theme === 'dark') {
-      document.documentElement.style.setProperty('--bg-primary', '#1A1A1A');
+      document.documentElement.style.setProperty('--bg-primary', '#FFD5CD');
       document.documentElement.style.setProperty('--text-primary', '#FFFFFF');
       document.documentElement.style.setProperty('--bg-secondary', '#333333');
     } else {

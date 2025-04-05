@@ -99,7 +99,7 @@ const SessionPage: React.FC = () => {
         
         {/* CloudyCircle component with proper props */}
         <div className="mb-4">
-          <CloudyCircle isActive={isActive} />
+        <CloudyCircle isActive={isActive} isDarkMode={isDarkMode} />
         </div>
         
         <p className="text-center max-w-md mx-auto mt-4">
