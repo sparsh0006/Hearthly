@@ -6,9 +6,14 @@ import { normalizeAudioData, getFrequencyBands } from '../../utils/audio';
 interface FluidCircleProps {
   status: SessionStatus;
   audioData?: number[];
+  isDarkMode?: boolean;
 }
 
-const FluidCircle: React.FC<FluidCircleProps> = ({ status, audioData = [] }) => {
+const FluidCircle: React.FC<FluidCircleProps> = ({ 
+  status, 
+  audioData = [],
+  isDarkMode = false
+}) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   
   useEffect(() => {
@@ -18,8 +23,14 @@ const FluidCircle: React.FC<FluidCircleProps> = ({ status, audioData = [] }) => 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
     
-    const isDarkMode = status === 'processing' || status === 'responding';
-    const circleColor = isDarkMode ? '#333333' : '#FFD700';
+    // Choose color based on status and theme
+    let circleColor = '#FFD700'; // Default yellow
+    
+    if (isDarkMode) {
+      circleColor = status === 'idle' ? '#FFD700' : '#333333';
+    } else {
+      circleColor = '#FFD700';
+    }
     
     canvas.width = 300;
     canvas.height = 300;
@@ -98,7 +109,7 @@ const FluidCircle: React.FC<FluidCircleProps> = ({ status, audioData = [] }) => 
           centerX, centerY, baseRadius * 1.2
         );
         
-        if (isDarkMode) {
+        if (isDarkMode && (status === 'listening' || status === 'processing' || status === 'responding')) {
           gradient.addColorStop(0, 'rgba(80, 80, 80, 0.4)');
           gradient.addColorStop(1, 'rgba(30, 30, 30, 0)');
         } else {
@@ -119,7 +130,7 @@ const FluidCircle: React.FC<FluidCircleProps> = ({ status, audioData = [] }) => 
     return () => {
       cancelAnimationFrame(animationFrameId);
     };
-  }, [status, audioData]);
+  }, [status, audioData, isDarkMode]);
   
   return (
     <div className="flex justify-center my-10">

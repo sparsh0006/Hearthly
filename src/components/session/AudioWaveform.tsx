@@ -2,9 +2,13 @@ import React, { useEffect, useRef } from 'react';
 
 interface AudioWaveformProps {
   isListening: boolean;
+  isDarkMode?: boolean;
 }
 
-const AudioWaveform: React.FC<AudioWaveformProps> = ({ isListening }) => {
+const AudioWaveform: React.FC<AudioWaveformProps> = ({ 
+  isListening,
+  isDarkMode = false
+}) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   
   useEffect(() => {
@@ -30,7 +34,7 @@ const AudioWaveform: React.FC<AudioWaveformProps> = ({ isListening }) => {
       for (let i = 0; i < bars; i++) {
         const height = isListening ? Math.random() * 30 + 5 : 5;
         
-        ctx.fillStyle = '#E5E5E5';
+        ctx.fillStyle = isDarkMode ? '#555555' : '#E5E5E5';
         ctx.fillRect(
           i * (barWidth + 2), 
           (canvas.height - height) / 2, 
@@ -47,7 +51,7 @@ const AudioWaveform: React.FC<AudioWaveformProps> = ({ isListening }) => {
     return () => {
       cancelAnimationFrame(animationFrameId);
     };
-  }, [isListening]);
+  }, [isListening, isDarkMode]);
   
   if (!isListening) return null;
   

@@ -40,7 +40,7 @@ export const useAudio = () => {
         
         if (analyserRef.current && dataArrayRef.current) {
           analyserRef.current.getByteFrequencyData(dataArrayRef.current);
-          setAudioData([...dataArrayRef.current]);
+          setAudioData(Array.from(dataArrayRef.current));
         }
         
         requestAnimationFrame(updateAudioData);

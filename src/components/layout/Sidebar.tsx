@@ -1,9 +1,21 @@
 import React from 'react';
 import Link from 'next/link';
+import { 
+  HomeIcon, 
+  ProfileIcon, 
+  HistoryIcon, 
+  FeedbackIcon, 
+  SettingsIcon, 
+  LogoutIcon 
+} from '../ui/Icons';
 
-const Sidebar: React.FC = () => {
+interface SidebarProps {
+  isDarkMode?: boolean;
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ isDarkMode = false }) => {
   return (
-    <div className="w-60 h-screen border-r border-gray-200 flex flex-col justify-between bg-white">
+    <div className={`w-60 h-screen border-r ${isDarkMode ? 'border-gray-700 bg-gray-800 text-white' : 'border-gray-200 bg-white text-gray-900'} flex flex-col justify-between`}>
       <div>
         <div className="p-5">
           <h1 className="text-2xl font-bold">calmi</h1>
@@ -12,26 +24,26 @@ const Sidebar: React.FC = () => {
         <nav className="mt-8">
           <ul className="space-y-4">
             <li>
-              <Link href="/" className="flex items-center px-5 py-2 hover:bg-gray-100">
-                <span className="mr-3">🏠</span>
+              <Link href="/" className={`flex items-center px-5 py-2 ${isDarkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'}`}>
+                <HomeIcon className="mr-3" size={20} color={isDarkMode ? 'white' : 'black'} />
                 <span>home</span>
               </Link>
             </li>
             <li>
-              <Link href="/profile" className="flex items-center px-5 py-2 hover:bg-gray-100">
-                <span className="mr-3">📋</span>
+              <Link href="/profile" className={`flex items-center px-5 py-2 ${isDarkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'}`}>
+                <ProfileIcon className="mr-3" size={20} color={isDarkMode ? 'white' : 'black'} />
                 <span>profile</span>
               </Link>
             </li>
             <li>
-              <Link href="/history" className="flex items-center px-5 py-2 hover:bg-gray-100">
-                <span className="mr-3">⏱️</span>
+              <Link href="/history" className={`flex items-center px-5 py-2 ${isDarkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'}`}>
+                <HistoryIcon className="mr-3" size={20} color={isDarkMode ? 'white' : 'black'} />
                 <span>session history</span>
               </Link>
             </li>
             <li>
-              <Link href="/feedback" className="flex items-center px-5 py-2 hover:bg-gray-100">
-                <span className="mr-3">👍</span>
+              <Link href="/feedback" className={`flex items-center px-5 py-2 ${isDarkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'}`}>
+                <FeedbackIcon className="mr-3" size={20} color={isDarkMode ? 'white' : 'black'} />
                 <span>feedback</span>
               </Link>
             </li>
@@ -40,12 +52,12 @@ const Sidebar: React.FC = () => {
       </div>
       
       <div className="p-5 space-y-4">
-        <Link href="/settings" className="flex items-center hover:bg-gray-100 p-2">
-          <span className="mr-3">⚙️</span>
+        <Link href="/settings" className={`flex items-center ${isDarkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'} p-2`}>
+          <SettingsIcon className="mr-3" size={20} color={isDarkMode ? 'white' : 'black'} />
           <span>settings</span>
         </Link>
-        <Link href="/logout" className="flex items-center hover:bg-gray-100 p-2">
-          <span className="mr-3">↪️</span>
+        <Link href="/logout" className={`flex items-center ${isDarkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'} p-2`}>
+          <LogoutIcon className="mr-3" size={20} color={isDarkMode ? 'white' : 'black'} />
           <span>log out</span>
         </Link>
         
@@ -54,10 +66,10 @@ const Sidebar: React.FC = () => {
             <span className="text-sm">free</span>
             <span className="text-sm">0/3 sessions</span>
           </div>
-          <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
+          <div className={`w-full ${isDarkMode ? 'bg-gray-700' : 'bg-gray-200'} rounded-full h-2 mt-2`}>
             <div className="bg-calmi-orange h-2 rounded-full" style={{ width: '0%' }}></div>
           </div>
-          <button className="w-full bg-calmi-orange text-black py-2 rounded mt-4">
+          <button className="w-full bg-calmi-orange text-black py-2 rounded mt-4 font-medium">
             upgrade
           </button>
         </div>

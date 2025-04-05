@@ -6,12 +6,15 @@ import TextInput from '../components/session/TextInput';
 import { useSession } from '../hooks/useSession';
 import { useAudio } from '../hooks/useAudio';
 import CloudyCircle from "../components/session/CloudyCircle";
+import FluidCircle from '../components/session/FluidCircle';
+import { useTheme } from '../contexts/ThemeContext';
 
 const SessionPage: React.FC = () => {
   const { sessionState, startListening: startSessionListening, stopListening: stopSessionListening, cancelSession } = useSession();
   const { isListening, audioData, startListening: startAudioListening, stopListening: stopAudioListening } = useAudio();
   const [showTextInput, setShowTextInput] = useState(false);
   const { status, message } = sessionState;
+  const { isDarkMode } = useTheme();
   
   // Add this to fix the errors - determine if the system is responding
   // When status is 'processing' or 'responding', isActive should be true
@@ -58,6 +61,10 @@ const SessionPage: React.FC = () => {
         <h2 className="text-xl mb-4 text-center">
           {status === 'listening' ? 'listening...' : 'your turn'}
         </h2>
+
+        {/* FluidCircle component with proper props */}
+        {/* <FluidCircle status={status} audioData={audioData} isDarkMode={isDarkMode} /> */}
+        
         
         {/* CloudyCircle component with proper props */}
         <div className="mb-4">
@@ -75,6 +82,7 @@ const SessionPage: React.FC = () => {
           onMicClick={handleMicClick}
           onTextClick={handleTextClick}
           onCancelClick={cancelSession}
+          isDarkMode={isDarkMode}
         />
         
         {showTextInput && (
