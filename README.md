@@ -28,7 +28,7 @@ Hearthly is an AI-powered therapy application that allows users to have voice or
 
 ```bash
 git clone <repository-url>
-cd hearthly-frontend
+cd hearthly
 ```
 
 2. Install dependencies:
