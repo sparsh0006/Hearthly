@@ -66,7 +66,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isDarkMode = false }) => {
         
         <div className="mt-4">
           <div className="flex justify-between items-center">
-            <span className="text-sm">free</span>
+            <span className="text-sm">Free</span>
             <span className="text-sm">{sessionCount}/3 sessions</span>
           </div>
           <div className={`w-full ${isDarkMode ? 'bg-gray-700' : 'bg-gray-200'} rounded-full h-2 mt-2`}>
