@@ -1,37 +1,123 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Hearthly Frontend
 
-## Getting Started
+A Next.js application for the Hearthly AI therapist platform.
 
-First, run the development server:
+## Overview
+
+Hearthly is an AI-powered therapy application that allows users to have voice or text conversations with an empathetic AI. The application transcribes user speech, processes it through OpenAI's GPT-4o model, and responds with both text and synthesized speech.
+
+## Features
+
+- Voice conversation with AI therapist
+- Text chat alternative
+- Visualization of voice input
+- Dark/light mode support
+- Session management (counts and limits)
+- Multiple language support
+
+## Prerequisites
+
+- Node.js 18.x or higher
+- npm or yarn
+- Backend server running (see backend readme)
+- Supabase account and project setup
+
+## Installation
+
+1. Clone the repository:
+
+```bash
+git clone <repository-url>
+cd hearthly
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+# or
+yarn install
+```
+
+3. Create a `.env.local` file in the project root:
+
+```
+NEXT_PUBLIC_API_URL=http://localhost:8000/api
+NEXT_PUBLIC_MOCK_USER_ID=your-uuid-here
+```
+
+Replace `your-uuid-here` with a valid UUID that exists in your Supabase users table.
+
+## Running the Application
 
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This will start the development server on [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+src/
+├── app/               # Next.js App Router files
+├── components/        # React components
+│   ├── layout/        # Layout components
+│   ├── session/       # Session-related components
+│   └── ui/            # UI components
+├── contexts/          # React contexts
+│   ├── AuthContext.tsx
+│   ├── LanguageContext.tsx
+│   └── ThemeContext.tsx
+├── hooks/             # Custom React hooks
+│   ├── useAudio.ts
+│   └── useSession.ts
+├── pages/             # Next.js Pages Router
+│   ├── _app.tsx
+│   ├── index.tsx
+│   └── session.tsx
+├── services/          # API services
+│   └── api.ts
+├── styles/            # Global styles
+│   └── globals.css
+├── types/             # TypeScript type definitions
+│   └── index.ts
+└── utils/             # Utility functions
+    ├── animation.ts
+    └── audio.ts
+```
 
-## Learn More
+## Usage
 
-To learn more about Next.js, take a look at the following resources:
+1. Open the application in your browser
+2. Click "begin session" to start a therapy session
+3. Speak using the microphone or use the text chat
+4. The AI will respond both in text and with synthesized speech
+5. End the session by clicking the cancel button
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Integration with Backend
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The frontend communicates with the backend using REST API calls for:
+- Creating and managing sessions
+- Sending and receiving messages
+- Processing audio
+- Playing back synthesized speech
 
-## Deploy on Vercel
+Make sure the backend server is running on port 8000 (default) or update the `NEXT_PUBLIC_API_URL` in your `.env.local` file accordingly.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Limitations
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# Hearthly
+- Free tier users are limited to 3 sessions
+- Audio processing requires microphone permissions
+
+## Troubleshooting
+
+- If you encounter CORS issues, make sure the backend is properly configured to allow requests from your frontend origin
+- For audio-related issues, check browser permissions for microphone access
+- If sessions aren't being created, verify that the UUID in your environment variables exists in your database
+
+## License
+
+[MIT](LICENSE)
