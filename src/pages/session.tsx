@@ -7,7 +7,6 @@ import TextInput from '../components/session/TextInput';
 import { useSession } from '../hooks/useSession';
 import { useAudio } from '../hooks/useAudio';
 import CloudyCircle from "../components/session/CloudyCircle";
-import FluidCircle from '../components/session/FluidCircle';
 import { useTheme } from '../contexts/ThemeContext';
 import ChatInterface from '../components/session/ChatInterface';
 import { processAudio } from '../services/api';

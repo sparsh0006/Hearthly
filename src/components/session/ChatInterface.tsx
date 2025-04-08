@@ -1,6 +1,5 @@
 // src/components/session/ChatInterface.tsx
 import React, { useState, useRef, useEffect } from 'react';
-import { processAudio } from '../../services/api';
 
 interface Message {
   id: string;
@@ -17,7 +16,7 @@ interface ChatInterfaceProps {
 
 const ChatInterface: React.FC<ChatInterfaceProps> = ({ 
   isOpen, 
-  onClose, 
+  // onClose, 
   isDarkMode,
   onMicClick 
 }) => {

@@ -17,7 +17,7 @@ const CloudyCircle: React.FC<CloudyCircleProps> = ({
   const speedFactor = isActive ? 0.5 : 1.2; // Lower = faster
   
   // Generate complex, irregular smoke shapes for more natural movement
-  const generateRandomSmokePath = (index: number) => {
+  const generateRandomSmokePath = (_: number) => {
     // Random positioning within the circle
     const centerX = 50 + (Math.random() * 30 - 15);
     const centerY = 50 + (Math.random() * 30 - 15);
@@ -73,7 +73,7 @@ interface AnimationVariant {
     rotate: number[];
 }
 
-const getRandomAnimationVariant = (index: number): AnimationVariant => {
+const getRandomAnimationVariant = (_: number): AnimationVariant => {
     // Create completely random movement directions
     const xMovement: number[] = [];
     const yMovement: number[] = [];

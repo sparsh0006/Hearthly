@@ -18,7 +18,7 @@ const SessionControls: React.FC<SessionControlsProps> = ({
   isDarkMode = false,
 }) => {
   const baseButtonClasses = `p-4 rounded-full focus:outline-none flex items-center justify-center`;
-  const darkModeClasses = isDarkMode ? 'bg-gray-800 border-gray-700 text-white' : '';
+  // const darkModeClasses = isDarkMode ? 'bg-gray-800 border-gray-700 text-white' : '';
   
   if (status === 'idle') {
     return (
