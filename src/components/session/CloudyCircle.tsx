@@ -1,3 +1,4 @@
+// src/components/session/CloudyCircle.tsx
 import { motion } from "framer-motion";
 import React, { useMemo } from "react";
 
@@ -17,9 +18,7 @@ const CloudyCircle: React.FC<CloudyCircleProps> = ({
   const speedFactor = isActive ? 0.5 : 1.2; // Lower = faster
   
   // Generate complex, irregular smoke shapes for more natural movement
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const generateRandomSmokePath = (index: number) => {
+  const generateRandomSmokePath = () => {
     // Random positioning within the circle
     const centerX = 50 + (Math.random() * 30 - 15);
     const centerY = 50 + (Math.random() * 30 - 15);
@@ -63,7 +62,7 @@ const CloudyCircle: React.FC<CloudyCircleProps> = ({
   
   // Pre-generate smoke paths to avoid regeneration on each render
   const smokePaths = useMemo(() => {
-    return Array.from({ length: particleCount }).map((_, i) => generateRandomSmokePath(i));
+    return Array.from({ length: particleCount }).map(() => generateRandomSmokePath());
   }, [particleCount]);
   
   // Generate random animation variants for each smoke particle
@@ -74,8 +73,8 @@ interface AnimationVariant {
     scale: number[];
     rotate: number[];
 }
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const getRandomAnimationVariant = (index: number): AnimationVariant => {
+
+const getRandomAnimationVariant = (): AnimationVariant => {
     // Create completely random movement directions
     const xMovement: number[] = [];
     const yMovement: number[] = [];
@@ -209,7 +208,7 @@ const getRandomAnimationVariant = (index: number): AnimationVariant => {
         
         {/* Deep background smoke (large, slow) */}
         {smokePaths.slice(0, 10).map((path, i) => {
-          const animation = getRandomAnimationVariant(i);
+          const animation = getRandomAnimationVariant();
           const duration = (7 + i % 5) * speedFactor;
           const delay = i * 0.1;
           const fill = i % 3 === 0 ? "url(#smokeGrad1)" : i % 3 === 1 ? "url(#smokeGrad2)" : "url(#smokeGrad3)";
@@ -245,7 +244,7 @@ const getRandomAnimationVariant = (index: number): AnimationVariant => {
         
         {/* Mid-layer smoke (medium, moderate speed) */}
         {smokePaths.slice(10, 25).map((path, i) => {
-          const animation = getRandomAnimationVariant(i + 10);
+          const animation = getRandomAnimationVariant();
           const duration = (6 + i % 4) * speedFactor;
           const delay = i * 0.08;
           const fill = i % 2 === 0 ? "url(#darkSmoke)" : "url(#smokeGrad3)";
@@ -281,7 +280,7 @@ const getRandomAnimationVariant = (index: number): AnimationVariant => {
         
         {/* Foreground smoke (small, fast) */}
         {smokePaths.slice(25).map((path, i) => {
-          const animation = getRandomAnimationVariant(i + 25);
+          const animation = getRandomAnimationVariant();
           const duration = (4 + i % 3) * speedFactor;
           const delay = i * 0.06;
           const fill = i % 2 === 0 ? "url(#lightSmoke)" : "url(#smokeGrad1)";
