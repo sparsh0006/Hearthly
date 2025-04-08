@@ -10,15 +10,6 @@ const HomePage: React.FC = () => {
         
         <div className="bg-calmi-orange w-48 h-48 rounded-full mb-10"></div>
         
-        <div className="flex space-x-2 mb-6">
-          <button className="px-6 py-2 bg-gray-200 rounded text-black">
-            classic
-          </button>
-          <button className="px-6 py-2 bg-gray-100 rounded text-gray-600">
-            guided
-          </button>
-        </div>
-        
         <Link href="/session" passHref>
           <button className="px-10 py-3 bg-calmi-orange rounded text-black font-medium">
             begin session

@@ -120,8 +120,24 @@ const getRandomAnimationVariant = (): AnimationVariant => {
   // Edge color
   const edgeColor = isDarkMode ? "#0a0a0a" : "#c0e0ff";
 
+  // Pulsing animation for when isActive is true
+  const containerVariants = {
+    idle: {
+      scale: 1,
+    },
+    active: {
+      scale: [1, 1.05, 1, 0.97, 1],
+      transition: {
+        duration: 1.5,
+        repeat: Infinity,
+        repeatType: "loop" as "loop",
+        ease: "easeInOut"
+      }
+    }
+  };
+
   return (
-    <div
+    <motion.div
       style={{
         width: "200px",
         height: "200px", 
@@ -130,6 +146,8 @@ const getRandomAnimationVariant = (): AnimationVariant => {
         position: "relative",
         background: bgColor,
       }}
+      variants={containerVariants}
+      animate={isActive ? "active" : "idle"}
     >
       {/* Base gradient */}
       <div
@@ -357,7 +375,7 @@ const getRandomAnimationVariant = (): AnimationVariant => {
           style={{ opacity: 0.6 }}
         />
       </motion.svg>
-    </div>
+    </motion.div>
   );
 };
 

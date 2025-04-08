@@ -7,7 +7,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider>
         <Head>
-          <title>calmi - meditation app</title>
+          <title>Hearthly - your emotional companion</title>
           <meta name="description" content="A simple meditation app" />
           <link rel="icon" href="/favicon.ico" />
         </Head>
