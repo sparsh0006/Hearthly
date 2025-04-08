@@ -1,6 +1,6 @@
 // src/hooks/useSession.ts
 import { useState, useCallback, useEffect } from 'react';
-import { SessionStatus, SessionState } from '../types';
+import { SessionState } from '../types';
 
 export const useSession = () => {
   const [sessionState, setSessionState] = useState<SessionState>({

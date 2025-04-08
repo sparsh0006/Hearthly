@@ -9,7 +9,6 @@ import { useAudio } from '../hooks/useAudio';
 import CloudyCircle from "../components/session/CloudyCircle";
 import { useTheme } from '../contexts/ThemeContext';
 import ChatInterface from '../components/session/ChatInterface';
-import { processAudio } from '../services/api';
 
 const SessionPage: React.FC = () => {
   const { 
@@ -23,8 +22,8 @@ const SessionPage: React.FC = () => {
   
   const { 
     isListening, 
-    isProcessing,
-    audioData, 
+    // isProcessing,
+    // audioData, 
     response,
     startListening: startAudioListening, 
     stopListening: stopAudioListening 

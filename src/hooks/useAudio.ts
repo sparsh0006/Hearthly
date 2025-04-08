@@ -19,7 +19,7 @@ export const useAudio = () => {
   const startListening = async () => {
     try {
       if (!audioContextRef.current) {
-        audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
+        audioContextRef.current = new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)();
       }
       
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
