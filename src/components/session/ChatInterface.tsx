@@ -1,4 +1,6 @@
+// src/components/session/ChatInterface.tsx
 import React, { useState, useRef, useEffect } from 'react';
+import { processAudio } from '../../services/api';
 
 interface Message {
   id: string;
@@ -10,7 +12,7 @@ interface ChatInterfaceProps {
   isOpen: boolean;
   onClose: () => void;
   isDarkMode: boolean;
-  onMicClick: () => void;  // Added prop for mic button
+  onMicClick: () => void;
 }
 
 const ChatInterface: React.FC<ChatInterfaceProps> = ({ 
@@ -27,6 +29,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
     }
   ]);
   const [inputValue, setInputValue] = useState('');
+  const [isProcessing, setIsProcessing] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   
   const scrollToBottom = () => {
@@ -37,8 +40,8 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
     scrollToBottom();
   }, [messages]);
   
-  const handleSendMessage = () => {
-    if (!inputValue.trim()) return;
+  const handleSendMessage = async () => {
+    if (!inputValue.trim() || isProcessing) return;
     
     // Add user message
     const userMessage: Message = {
@@ -49,27 +52,48 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
     
     setMessages(prev => [...prev, userMessage]);
     setInputValue('');
+    setIsProcessing(true);
     
-    // Simulate bot response after a short delay
-    setTimeout(() => {
-      let botResponse = "";
+    // Add a temporary "typing" message
+    const typingId = (Date.now() + 1).toString();
+    setMessages(prev => [...prev, {
+      id: typingId,
+      text: "...",
+      sender: 'bot'
+    }]);
+    
+    try {
+      // In a real implementation, you'd send the text to your backend API
+      // For demo purposes, we'll use a timeout to simulate processing
+      setTimeout(() => {
+        // This is where you would integrate with your backend API for text messages
+        // For now, we'll use some conditional responses
+        let botResponse = "";
+        
+        if (userMessage.text.toLowerCase().includes("feeling") && userMessage.text.toLowerCase().includes("depress")) {
+          botResponse = "i'm really sorry you're feeling this way—it sounds like it's been weighing on you for a while. can you tell me more about what's been triggering these feelings today? or... maybe it's just the same heaviness lingering from before?";
+        } else if (userMessage.text.toLowerCase().includes("help") || userMessage.text.toLowerCase().includes("overcome")) {
+          botResponse = "i hear ya—it's tough when that heavy feeling just refuses to let up. i wonder, is this still related to the breakup or maybe that sense of boredom you mentioned before? either way, we can figure out some steps to help ease this. do you think talking it through more deeply could give you some relief, or are you leaning towards making changes in your daily routine?";
+        } else {
+          botResponse = "i'm here to listen. would you like to tell me more about what's going on?";
+        }
+        
+        // Replace the typing message with the actual response
+        setMessages(prev => prev.map(msg => 
+          msg.id === typingId ? { ...msg, text: botResponse } : msg
+        ));
+        
+        setIsProcessing(false);
+      }, 1500);
+    } catch (error) {
+      console.error("Error sending message:", error);
+      setIsProcessing(false);
       
-      if (inputValue.toLowerCase().includes("feeling") && inputValue.toLowerCase().includes("depress")) {
-        botResponse = "i'm really sorry you're feeling this way—it sounds like it's been weighing on you for a while. can you tell me more about what's been triggering these feelings today? or... maybe it's just the same heaviness lingering from before?";
-      } else if (inputValue.toLowerCase().includes("help") || inputValue.toLowerCase().includes("overcome")) {
-        botResponse = "i hear ya—it's tough when that heavy feeling just refuses to let up. i wonder, is this still related to the breakup or maybe that sense of boredom you mentioned before? either way, we can figure out some steps to help ease this. do you think talking it through more deeply could give you some relief, or are you leaning towards making changes in your daily routine?";
-      } else {
-        botResponse = "i'm here to listen. would you like to tell me more about what's going on?";
-      }
-      
-      const botMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        text: botResponse,
-        sender: 'bot'
-      };
-      
-      setMessages(prev => [...prev, botMessage]);
-    }, 1000);
+      // Replace typing message with error message
+      setMessages(prev => prev.map(msg => 
+        msg.id === typingId ? { ...msg, text: "Sorry, I couldn't process that message. Please try again." } : msg
+      ));
+    }
   };
   
   return (
@@ -119,7 +143,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
           <div className="flex ml-2">
             <button 
               className={`p-2 rounded-full ${isDarkMode ? 'calmi-dark' : 'bg-gray-200'} mr-2 w-10 h-10 flex items-center justify-center`}
-              onClick={onMicClick}  // Changed to use onMicClick which will close the chat
+              onClick={onMicClick}
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={isDarkMode ? 'white' : 'black'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
@@ -131,6 +155,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
             <button 
               className="p-2 rounded-full bg-calmi-orange w-10 h-10 flex items-center justify-center"
               onClick={handleSendMessage}
+              disabled={isProcessing}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

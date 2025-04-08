@@ -1,3 +1,4 @@
+// src/pages/session.tsx
 import React, { useState, useEffect } from 'react';
 import MainLayout from '../components/layout/MainLayout';
 import AudioWaveform from '../components/session/AudioWaveform';
@@ -9,19 +10,36 @@ import CloudyCircle from "../components/session/CloudyCircle";
 import FluidCircle from '../components/session/FluidCircle';
 import { useTheme } from '../contexts/ThemeContext';
 import ChatInterface from '../components/session/ChatInterface';
+import { processAudio } from '../services/api';
 
 const SessionPage: React.FC = () => {
-  const { sessionState, startListening: startSessionListening, stopListening: stopSessionListening, cancelSession } = useSession();
-  const { isListening, audioData, startListening: startAudioListening, stopListening: stopAudioListening } = useAudio();
+  const { 
+    sessionState, 
+    startListening: startSessionListening, 
+    stopListening: stopSessionListening, 
+    setResponseMessage,
+    finishResponse,
+    cancelSession 
+  } = useSession();
+  
+  const { 
+    isListening, 
+    isProcessing,
+    audioData, 
+    response,
+    startListening: startAudioListening, 
+    stopListening: stopAudioListening 
+  } = useAudio();
+  
   const [showTextInput, setShowTextInput] = useState(false);
   const { status, message } = sessionState;
   const { isDarkMode } = useTheme();
   const [showChat, setShowChat] = useState(false);
   
-  // Add this to fix the errors - determine if the system is responding
-  // When status is 'processing' or 'responding', isActive should be true
+  // Determine if the system is responding
   const isActive = status === 'processing' || status === 'responding';
   
+  // Handle audio recording
   useEffect(() => {
     if (status === 'listening' && !isListening) {
       startAudioListening();
@@ -30,9 +48,22 @@ const SessionPage: React.FC = () => {
     }
   }, [status, isListening, startAudioListening, stopAudioListening]);
   
+  // Handle backend response
+  useEffect(() => {
+    if (response && response.transcript) {
+      setResponseMessage(response.transcript);
+      
+      // Return to idle state after response is played
+      const audioElement = new Audio(`data:audio/mp3;base64,${response.audio}`);
+      audioElement.onended = () => {
+        finishResponse();
+      };
+    }
+  }, [response, setResponseMessage, finishResponse]);
+  
   const handleMicClick = () => {
     if (showChat) {
-      // If chat is open, close it (formerly cancel button functionality)
+      // If chat is open, close it
       setShowChat(false);
       return;
     }
@@ -51,15 +82,20 @@ const SessionPage: React.FC = () => {
     setShowChat(true);
   };
   
-  const handleTextSend = (text: string) => {
+  const handleTextSend = async (text: string) => {
     console.log('User message:', text);
-    // Here you would typically send the message to your backend
+    // For text messages, we'll need to implement a text-based API call
+    // This would be similar to the audio one but sending text instead
+    // For now, we'll use a simulated response
     setShowTextInput(false);
-    // Simulate processing
     startSessionListening();
+    stopSessionListening();
+    
+    // Simulate a response from backend
     setTimeout(() => {
-      stopSessionListening();
-    }, 2000);
+      setResponseMessage("I hear you. Can you tell me more about that?");
+      setTimeout(finishResponse, 3000);
+    }, 1000);
   };
   
   const handleTextCancel = () => {
@@ -90,16 +126,13 @@ const SessionPage: React.FC = () => {
     <MainLayout>
       <div className="flex flex-col items-center justify-center h-[calc(100vh-100px)]">
         <h2 className="text-xl mb-4 text-center">
-          {status === 'listening' ? 'listening...' : 'your turn'}
+          {status === 'listening' ? 'listening...' : 
+           status === 'processing' ? 'processing...' : 
+           status === 'responding' ? 'responding...' : 'your turn'}
         </h2>
 
-        {/* FluidCircle component with proper props */}
-        {/* <FluidCircle status={status} audioData={audioData} isDarkMode={isDarkMode} /> */}
-        
-        
-        {/* CloudyCircle component with proper props */}
         <div className="mb-4">
-        <CloudyCircle isActive={isActive} isDarkMode={isDarkMode} />
+          <CloudyCircle isActive={isActive} isDarkMode={isDarkMode} />
         </div>
         
         <p className="text-center max-w-md mx-auto mt-4">

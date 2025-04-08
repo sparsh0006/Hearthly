@@ -1,3 +1,4 @@
+// src/hooks/useSession.ts
 import { useState, useCallback, useEffect } from 'react';
 import { SessionStatus, SessionState } from '../types';
 
@@ -26,7 +27,7 @@ export const useSession = () => {
   const startListening = useCallback(() => {
     setSessionState({
       status: 'listening',
-      message: "oh hey, welcome back. so, what's been sitting heavy on your chest today?",
+      message: "I'm listening...",
     });
     setHasStarted(true);
   }, []);
@@ -34,8 +35,22 @@ export const useSession = () => {
   const stopListening = useCallback(() => {
     setSessionState({
       status: 'processing',
-      message: "i'm really sorry you're feeling this way—it sounds like it's been weighing on you for a while. can you tell me more about what's been triggering these feelings today?",
+      message: "Just a moment, processing what you said...",
     });
+  }, []);
+  
+  const setResponseMessage = useCallback((transcript: string) => {
+    setSessionState({
+      status: 'responding',
+      message: transcript,
+    });
+  }, []);
+  
+  const finishResponse = useCallback(() => {
+    setSessionState(prev => ({
+      ...prev,
+      status: 'idle',
+    }));
   }, []);
   
   const cancelSession = useCallback(() => {
@@ -56,6 +71,8 @@ export const useSession = () => {
     sessionCount,
     startListening,
     stopListening,
+    setResponseMessage,
+    finishResponse,
     cancelSession,
   };
 };
