@@ -6,10 +6,16 @@
   --bg-primary: #FFFFFF;
   --text-primary: #1A1A1A;
   --bg-secondary: #F5F5F5;
-  --calmi-orange: #B2A4FF; /* it is calmi purple not orange */
+  --calmi-orange: #B2A4FF; /* Hearthly's violet color */
+  --calmi-light: #CDC1FF;
+  --calmi-dark: #8F7FF6;
 }
 
-/* Dark mode variables will be set via ThemeContext.tsx */
+.dark {
+  --bg-primary: #000000;
+  --text-primary: #FFFFFF;
+  --bg-secondary: #111111;
+}
 
 html,
 body {
@@ -25,26 +31,133 @@ body {
   box-sizing: border-box;
 }
 
-/* Animation for waveform */
-@keyframes waveAnimation {
-  0% { transform: scaleY(0.5); }
-  50% { transform: scaleY(1.2); }
-  100% { transform: scaleY(0.5); }
+/* Wave animation keyframes */
+@keyframes wave {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
-.wave-bar {
-  animation: waveAnimation 1.2s infinite;
-  animation-timing-function: ease-in-out;
+/* Accordion animation for FAQ */
+.transition-max-height {
+  transition: max-height 0.3s ease-in-out;
 }
 
-/* Stagger animation start for each bar */
-.wave-bar:nth-child(1) { animation-delay: 0.0s; }
-.wave-bar:nth-child(2) { animation-delay: 0.1s; }
-.wave-bar:nth-child(3) { animation-delay: 0.2s; }
-.wave-bar:nth-child(4) { animation-delay: 0.3s; }
-.wave-bar:nth-child(5) { animation-delay: 0.4s; }
-.wave-bar:nth-child(6) { animation-delay: 0.5s; }
-.wave-bar:nth-child(7) { animation-delay: 0.6s; }
-.wave-bar:nth-child(8) { animation-delay: 0.7s; }
-.wave-bar:nth-child(9) { animation-delay: 0.8s; }
-.wave-bar:nth-child(10) { animation-delay: 0.9s; }
+/* Button hover animation */
+.hover\:scale-button:hover {
+  transform: scale(1.05);
+  transition: transform 0.2s ease;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Fluid typography */
+@media (min-width: 768px) {
+  .fluid-text-xl {
+    font-size: clamp(1.25rem, 1vw + 1rem, 1.5rem);
+  }
+  
+  .fluid-text-2xl {
+    font-size: clamp(1.5rem, 2vw + 1rem, 2rem);
+  }
+  
+  .fluid-text-3xl {
+    font-size: clamp(1.875rem, 3vw + 1rem, 2.5rem);
+  }
+  
+  .fluid-text-4xl {
+    font-size: clamp(2.25rem, 4vw + 1rem, 3rem);
+  }
+}
+
+/* Animated wave container */
+.wave-container {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+/* Pulse animation for the logo circle */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.pulse-animation {
+  animation: pulse 3s infinite ease-in-out;
+}
+
+/* Fade-in animation for content sections */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+.fade-in-delay-1 {
+  opacity: 0;
+  animation: fadeIn 0.8s ease-out forwards;
+  animation-delay: 0.2s;
+}
+
+.fade-in-delay-2 {
+  opacity: 0;
+  animation: fadeIn 0.8s ease-out forwards;
+  animation-delay: 0.4s;
+}
+
+.fade-in-delay-3 {
+  opacity: 0;
+  animation: fadeIn 0.8s ease-out forwards;
+  animation-delay: 0.6s;
+}
+
+/* Add hover effects to feature cards */
+.feature-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--calmi-orange);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--calmi-dark);
+}

@@ -125,6 +125,9 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
       
       <div className={`border-t p-4 ${isDarkMode ? 'calmi-dark border-gray-700' : 'bg-white border-gray-200'}`}>
         <div className="flex items-center">
+        {/* // src/components/session/ChatInterface.tsx
+// Update the input element style in your handleSendMessage function around line 125-140 */}
+
           <input
             type="text"
             value={inputValue}

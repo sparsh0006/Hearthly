@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import Sidebar from './Sidebar';
 import { useTheme } from '../../contexts/ThemeContext';
 import { ThemeToggle } from '../ui/Toggle';
+import { useAuth } from '../../contexts/AuthContext';
+import Link from 'next/link';
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -10,6 +12,7 @@ interface MainLayoutProps {
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const [showSidebar, setShowSidebar] = useState(false);
   const { isDarkMode, toggleTheme } = useTheme();
+  const { user, signOut } = useAuth();
   
   return (
     <div className={`flex h-screen ${isDarkMode ? 'bg-calmi-dark text-white' : 'bg-white text-gray-900'}`}>
@@ -44,8 +47,24 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
               isDarkMode={isDarkMode}
               onToggle={toggleTheme}
             />
-           
             
+            {user ? (
+              <div className="flex items-center space-x-3">
+                <Link href="/profile" className="text-sm hover:underline">
+                  {user.email}
+                </Link>
+                <button 
+                  onClick={() => signOut()}
+                  className="text-sm text-red-500 hover:underline"
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <Link href="/auth/login" className="text-sm hover:underline">
+                Login
+              </Link>
+            )}
           </div>
         </div>
         <main className="max-w-4xl mx-auto p-4">

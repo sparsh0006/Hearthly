@@ -1,3 +1,6 @@
+// src/components/session/SessionControls.tsx
+// Add React.memo to optimize re-renders
+
 import React from 'react';
 import { SessionStatus } from '../../types';
 import { MicIcon, MessageIcon, CloseIcon } from '../ui/Icons';
@@ -18,7 +21,6 @@ const SessionControls: React.FC<SessionControlsProps> = ({
   isDarkMode = false,
 }) => {
   const baseButtonClasses = `p-4 rounded-full focus:outline-none flex items-center justify-center`;
-  // const darkModeClasses = isDarkMode ? 'bg-gray-800 border-gray-700 text-white' : '';
   
   if (status === 'idle') {
     return (
@@ -95,4 +97,5 @@ const SessionControls: React.FC<SessionControlsProps> = ({
   );
 };
 
-export default SessionControls;
+// Use React.memo to prevent unnecessary re-renders
+export default React.memo(SessionControls);

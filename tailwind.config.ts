@@ -11,7 +11,11 @@ module.exports = {
         'calmi-light': '#FFFFFF',
         'calmi-dark-secondary': '#000000', // A slightly lighter shade for secondary elements
       },
+      transitionProperty: {
+        'max-height': 'max-height',
+      },
     },
   },
   plugins: [],
+  darkMode: 'class', // Enable dark mode support
 }
