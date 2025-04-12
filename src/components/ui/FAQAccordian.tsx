@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTheme } from '../../contexts/ThemeContext';
 
 interface FAQItem {
   question: string;
@@ -11,6 +12,7 @@ interface FAQAccordionProps {
 
 const FAQAccordion: React.FC<FAQAccordionProps> = ({ items }) => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const { isDarkMode } = useTheme();
 
   const toggleItem = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
@@ -21,7 +23,7 @@ const FAQAccordion: React.FC<FAQAccordionProps> = ({ items }) => {
       {items.map((item, index) => (
         <div key={index} className="border-b border-gray-200 dark:border-gray-700">
           <button
-            className="flex justify-between items-center w-full py-5 px-1 text-left text-lg font-medium focus:outline-none"
+            className="flex justify-between items-center w-full py-5 px-1 text-left text-lg font-medium focus:outline-none text-gray-800 dark:text-white"
             onClick={() => toggleItem(index)}
           >
             <span>{item.question}</span>

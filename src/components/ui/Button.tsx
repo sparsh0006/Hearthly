@@ -33,9 +33,9 @@ const Button: React.FC<ButtonProps> = ({
   
   // Variant classes
   const variantClasses = {
-    primary: 'bg-calmi-orange text-black border border-transparent hover:bg-yellow-500 focus:ring-yellow-500',
-    secondary: 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 focus:ring-calmi-orange',
-    text: 'bg-transparent text-gray-700 hover:bg-gray-100 focus:ring-calmi-orange',
+    primary: 'bg-calmi-orange text-black border border-transparent hover:bg-calmi-purple-300 focus:ring-calmi-purple-300',
+    secondary: 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600 focus:ring-calmi-orange',
+    text: 'bg-transparent text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 focus:ring-calmi-orange',
   };
   
   // Disabled classes

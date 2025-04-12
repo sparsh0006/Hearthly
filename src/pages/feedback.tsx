@@ -16,8 +16,8 @@ const FeedbackPage: React.FC = () => {
 
   return (
     <MainLayout>
-      <div className="max-w-2xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-        <h1 className="text-2xl font-bold mb-6">Give Feedback</h1>
+      <div className="max-w-2xl mx-auto py-8 px-4 sm:px-6 lg:px-8 bg-white dark:bg-black">
+        <h1 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Give Feedback</h1>
         
         {submitted ? (
           <div className="bg-green-100 dark:bg-green-800 text-green-800 dark:text-green-100 p-6 rounded-lg text-center">
@@ -35,7 +35,7 @@ const FeedbackPage: React.FC = () => {
             
             <form onSubmit={handleSubmit}>
               <div className="mb-6">
-                <label htmlFor="feedback" className="block text-sm font-medium mb-2">
+                <label htmlFor="feedback" className="block text-sm font-medium mb-2 text-gray-700 dark:text-white">
                   Your Feedback
                 </label>
                 <textarea
@@ -43,7 +43,7 @@ const FeedbackPage: React.FC = () => {
                   rows={6}
                   value={feedback}
                   onChange={(e) => setFeedback(e.target.value)}
-                  className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 text-black focus:ring-calmi-orange focus:border-transparent"
+                  className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-calmi-orange focus:border-transparent text-black dark:text-white dark:bg-gray-700 dark:border-gray-600"
                   placeholder="Share your thoughts, suggestions, or report any issues..."
                   required
                 ></textarea>

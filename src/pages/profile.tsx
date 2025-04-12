@@ -92,7 +92,7 @@ const ProfilePage: React.FC = () => {
               {isEditing ? (
                 <form onSubmit={handleSubmit}>
                   <div className="mb-4">
-                    <label htmlFor="fullName" className="block text-sm font-medium mb-1">
+                    <label htmlFor="fullName" className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
                       Full Name
                     </label>
                     <input
@@ -100,12 +100,12 @@ const ProfilePage: React.FC = () => {
                       type="text"
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
-                      className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-calmi-orange focus:border-transparent"
+                      className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-calmi-orange focus:border-transparent text-black dark:text-white dark:bg-gray-700 dark:border-gray-600"
                     />
                   </div>
                   
                   <div className="mb-6">
-                    <label htmlFor="email" className="block text-sm font-medium mb-1">
+                    <label htmlFor="email" className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
                       Email
                     </label>
                     <input
@@ -113,7 +113,7 @@ const ProfilePage: React.FC = () => {
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-calmi-orange focus:border-transparent"
+                      className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-calmi-orange focus:border-transparent text-black dark:text-white dark:bg-gray-700 dark:border-gray-600"
                       required
                     />
                   </div>
@@ -135,7 +135,7 @@ const ProfilePage: React.FC = () => {
                 <div>
                   <div className="mb-6">
                     <div className="flex justify-between items-center mb-4">
-                      <h2 className="text-xl font-medium">Account Information</h2>
+                      <h2 className="text-xl font-medium text-gray-900 dark:text-white">Account Information</h2>
                       <Button 
                         variant="secondary" 
                         size="small" 
@@ -148,21 +148,21 @@ const ProfilePage: React.FC = () => {
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <p className="text-sm text-gray-500 dark:text-gray-400">Full Name</p>
-                        <p className="font-medium">{profile?.full_name || 'Not set'}</p>
+                        <p className="font-medium text-gray-800 dark:text-gray-200">{profile?.full_name || 'Not set'}</p>
                       </div>
                       <div>
                         <p className="text-sm text-gray-500 dark:text-gray-400">Email</p>
-                        <p className="font-medium">{profile?.email || user?.email}</p>
+                        <p className="font-medium text-gray-800 dark:text-gray-200">{profile?.email || user?.email}</p>
                       </div>
                     </div>
                   </div>
                   
                   <div className="py-6 border-t border-gray-200 dark:border-gray-700">
-                    <h2 className="text-xl font-medium mb-4">Subscription</h2>
+                    <h2 className="text-xl font-medium mb-4 text-gray-900 dark:text-white">Subscription</h2>
                     
                     <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-4 mb-4">
                       <div className="flex justify-between items-center mb-2">
-                        <span className="font-medium">Current Plan:</span>
+                        <span className="font-medium text-gray-800 dark:text-gray-200">Current Plan:</span>
                         <span className="bg-calmi-orange text-black px-2 py-1 rounded text-sm">
                           Free
                         </span>

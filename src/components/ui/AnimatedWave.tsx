@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { useTheme } from '../../contexts/ThemeContext';
 
 interface AnimatedWaveProps {
   className?: string;
@@ -14,6 +15,7 @@ const AnimatedWave: React.FC<AnimatedWaveProps> = ({
   color = '#B2A4FF'
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const { isDarkMode } = useTheme();
   
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -26,12 +28,24 @@ const AnimatedWave: React.FC<AnimatedWaveProps> = ({
     canvas.width = width;
     canvas.height = height;
     
+    // Set background for the canvas in dark mode
+    if (isDarkMode) {
+      ctx.fillStyle = '#000000';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+    
     let time = 0;
     let animationFrameId: number;
     
     const render = () => {
       // Clear canvas
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      // Re-apply background in dark mode
+      if (isDarkMode) {
+        ctx.fillStyle = '#000000';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      }
       
       // Draw waves
       ctx.fillStyle = color;
@@ -78,7 +92,7 @@ const AnimatedWave: React.FC<AnimatedWaveProps> = ({
     return () => {
       cancelAnimationFrame(animationFrameId);
     };
-  }, [height, width, color]);
+  }, [height, width, color, isDarkMode]);
   
   return (
     <canvas 
@@ -87,6 +101,7 @@ const AnimatedWave: React.FC<AnimatedWaveProps> = ({
       style={{ 
         maxWidth: '100%',
         display: 'block',
+        backgroundColor: isDarkMode ? '#000000' : 'transparent'
       }}
     />
   );

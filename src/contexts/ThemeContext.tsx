@@ -15,6 +15,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   
   // Check for saved theme preference or system preference
   useEffect(() => {
+    // Check for saved preference
     const savedTheme = localStorage.getItem('calmi-theme') as Theme;
     if (savedTheme) {
       setTheme(savedTheme);
@@ -23,21 +24,27 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   }, []);
   
-  // Update body class and localStorage when theme changes
+  // Update document class and localStorage when theme changes
   useEffect(() => {
-    document.documentElement.classList.remove('light-theme', 'dark-theme');
-    document.documentElement.classList.add(`${theme}-theme`);
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    
     localStorage.setItem('calmi-theme', theme);
     
     // Set CSS variables for theme colors
     if (theme === 'dark') {
-      document.documentElement.style.setProperty('--bg-primary', '#FFD5CD');
+      document.documentElement.style.setProperty('--bg-primary', '#000000');
       document.documentElement.style.setProperty('--text-primary', '#FFFFFF');
-      document.documentElement.style.setProperty('--bg-secondary', '#333333');
+      document.documentElement.style.setProperty('--bg-secondary', '#121212');
+      document.body.style.backgroundColor = '#000000';
     } else {
       document.documentElement.style.setProperty('--bg-primary', '#FFFFFF');
       document.documentElement.style.setProperty('--text-primary', '#1A1A1A');
       document.documentElement.style.setProperty('--bg-secondary', '#F5F5F5');
+      document.body.style.backgroundColor = '#FFFFFF';
     }
   }, [theme]);
   

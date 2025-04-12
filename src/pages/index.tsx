@@ -62,139 +62,152 @@ const IndexPage: React.FC = () => {
 
   return (
     <>
-      <Head>
-        <title>Hearthly - Your AI Emotional Companion</title>
-        <meta name="description" content="Talk through your problems with ease using Hearthly, an AI-powered emotional companion available whenever you need support." />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      {/* Add these to the Head section in index.tsx */}
+            <Head>
+              <title>Hearthly - Your AI Emotional Companion</title>
+              <meta name="description" content="Talk through your problems with ease using Hearthly, an AI-powered emotional companion available whenever you need support." />
+              <meta name="viewport" content="width=device-width, initial-scale=1" />
+              <link rel="icon" href="/favicon.ico" />
+              <meta name="color-scheme" content={isDarkMode ? 'dark' : 'light'} />
+              <meta name="theme-color" content={isDarkMode ? '#000000' : '#FFFFFF'} />
+              <style>{`
+                body {
+                  background-color: ${isDarkMode ? '#000000' : '#FFFFFF'};
+                }
+                html {
+                  background-color: ${isDarkMode ? '#000000' : '#FFFFFF'};
+                }
+              `}</style>
+            </Head>
 
       <div className={`min-h-screen ${isDarkMode ? 'bg-black text-white' : 'bg-white text-gray-900'}`}>
-        {/* Header */}
-        <header className="px-5 py-4 fixed w-full z-10 flex justify-between items-center">
-          <h1 className="text-2xl font-bold">Hearthly</h1>
-          <div className="flex items-center gap-4">
-            <ThemeToggle 
-              isDarkMode={isDarkMode}
-              onToggle={toggleTheme}
-            />
-            {user ? (
-              <button 
-                onClick={() => router.push('/profile')}
-                className="text-sm hover:underline"
-              >
-                Profile
-              </button>
-            ) : (
-              <button 
-                onClick={() => setShowAuthModal(true)}
-                className="px-4 py-2 rounded-md bg-white text-black hover:bg-gray-200 transition-colors"
-              >
-                Login
-              </button>
-            )}
-          </div>
-        </header>
+              {/* Header */}
+      <header className="px-5 py-4 fixed w-full z-10 flex justify-between items-center">
+        <h1 className="text-2xl font-bold">Hearthly</h1>
+        <div className="flex items-center gap-4">
+          <ThemeToggle 
+            isDarkMode={isDarkMode}
+            onToggle={toggleTheme}
+          />
+          {user ? (
+            <button 
+              onClick={() => router.push('/profile')}
+              className="text-sm hover:underline"
+            >
+              Profile
+            </button>
+          ) : (
+            <button 
+              onClick={() => setShowAuthModal(true)}
+              className="px-4 py-2 rounded-md border border-calmi-orange bg-white text-black hover:bg-gray-100 dark:bg-black dark:text-white dark:hover:bg-gray-900 transition-colors"
+            >
+              Login
+            </button>
+          )}
+        </div>
+      </header>
 
-        {/* Hero Section */}
-        <section className="relative pt-24 pb-16 md:pt-32 md:pb-32 px-5">
-          <div className="max-w-5xl mx-auto">
-            <div className="grid md:grid-cols-2 gap-8 items-center">
-              <div>
-                <h2 className="text-4xl md:text-5xl font-bold mb-4">
-                  Talk through your problems with ease.
-                </h2>
-                <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-8">
-                  No high fees, no wait times, no downloads, no hassle— 
-                  just support with an empathetic AI whenever and wherever you need it.
-                </p>
-                <button 
-                  onClick={handleBeginSession}
-                  className="px-6 py-3 rounded-md bg-calmi-orange text-black font-medium hover:opacity-90 transition-opacity"
-                >
-                  begin session
-                </button>
-              </div>
-              
-              <div className="relative h-64 md:h-80">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-48 h-48 bg-calmi-orange rounded-full flex items-center justify-center overflow-hidden">
-                    <div className="w-32 h-32 bg-black dark:bg-gray-800 rounded-full"></div>
-                  </div>
-                </div>
-              </div>
+
+      {/* Hero Section */}
+      <section className="relative pt-24 pb-16 md:pt-32 md:pb-32 px-5 bg-white dark:bg-black dark-bg-force force-bg-black" style={{backgroundColor: isDarkMode ? '#000000' : '#FFFFFF'}}>
+        <div className="max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            <div>
+              <h2 className="text-4xl md:text-5xl font-bold mb-4">
+                Talk through your problems with ease.
+              </h2>
+              <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-8">
+                No high fees, no wait times, no downloads, no hassle— 
+                just support with an empathetic AI whenever and wherever you need it.
+              </p>
+              <button 
+                onClick={handleBeginSession}
+                className="px-6 py-3 rounded-md bg-calmi-orange text-black font-medium hover:opacity-90 transition-opacity"
+              >
+                begin session
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Wave Animation Section */}
-        <section className="relative py-0 overflow-hidden">
-          <div className="w-full">
-            <AnimatedWave 
-              height={200} 
-              width={2000} 
-              color="#B2A4FF" 
-            />
-          </div>
-        </section>
-
-        {/* Features Section */}
-        <section className="py-16 px-5">
-          <div className="max-w-5xl mx-auto">
-            <h2 className="text-3xl font-bold text-center mb-12">How Hearthly Helps You</h2>
             
-            <div className="grid md:grid-cols-3 gap-8">
-              <div className="p-6 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                <div className="w-12 h-12 bg-calmi-orange rounded-full flex items-center justify-center mb-4">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                  </svg>
+            <div className="relative h-64 md:h-80">
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-48 h-48 bg-calmi-orange rounded-full flex items-center justify-center overflow-hidden">
+                  <div className="w-32 h-32 bg-black dark:bg-gray-800 rounded-full"></div>
                 </div>
-                <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">24/7 Availability</h3>
-                <p className="text-gray-600 dark:text-gray-300">
-                  Access emotional support anytime, day or night, without appointments or waiting lists.
-                </p>
-              </div>
-              
-              <div className="p-6 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                <div className="w-12 h-12 bg-calmi-orange rounded-full flex items-center justify-center mb-4">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                  </svg>
-                </div>
-                <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Complete Privacy</h3>
-                <p className="text-gray-600 dark:text-gray-300">
-                  Share your thoughts in a safe, confidential space with no judgment or social anxiety.
-                </p>
-              </div>
-              
-              <div className="p-6 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                <div className="w-12 h-12 bg-calmi-orange rounded-full flex items-center justify-center mb-4">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
-                  </svg>
-                </div>
-                <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Empathetic Listening</h3>
-                <p className="text-gray-600 dark:text-gray-300">
-                  Experience thoughtful responses that help you process emotions and gain new perspectives.
-                </p>
               </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* FAQ Section */}
-        <section className="py-16 px-5 bg-gray-50 dark:bg-gray-900">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
-            <FAQAccordion items={faqItems} />
+      {/* Wave Animation Section */}
+      <section className="relative py-0 overflow-hidden bg-white dark:bg-black dark-bg-force force-bg-black" style={{backgroundColor: isDarkMode ? '#000000' : '#FFFFFF'}}>
+        <div className="w-full">
+          <AnimatedWave 
+            height={200} 
+            width={2000} 
+            color="#B2A4FF" 
+          />
+        </div>
+      </section>
+
+                      {/* Features Section */}
+      <section className="py-16 px-5 bg-white dark:bg-black" style={{backgroundColor: isDarkMode ? '#000000' : '#FFFFFF'}}>
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white">How Hearthly Helps You</h2>
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="p-6 bg-white dark:bg-black rounded-lg border border-calmi-orange" style={{backgroundColor: isDarkMode ? '#000000' : '#FFFFFF'}}>
+              <div className="w-12 h-12 bg-calmi-orange rounded-full flex items-center justify-center mb-4">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">24/7 Availability</h3>
+              <p className="text-gray-600 dark:text-gray-300">
+                Access emotional support anytime, day or night, without appointments or waiting lists.
+              </p>
+            </div>
+            
+            <div className="p-6 bg-white dark:bg-black rounded-lg border border-calmi-orange" style={{backgroundColor: isDarkMode ? '#000000' : '#FFFFFF'}}>
+              <div className="w-12 h-12 bg-calmi-orange rounded-full flex items-center justify-center mb-4">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Complete Privacy</h3>
+              <p className="text-gray-600 dark:text-gray-300">
+                Share your thoughts in a safe, confidential space with no judgment or social anxiety.
+              </p>
+            </div>
+            
+            <div className="p-6 bg-white dark:bg-black rounded-lg border border-calmi-orange" style={{backgroundColor: isDarkMode ? '#000000' : '#FFFFFF'}}>
+              <div className="w-12 h-12 bg-calmi-orange rounded-full flex items-center justify-center mb-4">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Empathetic Listening</h3>
+              <p className="text-gray-600 dark:text-gray-300">
+                Experience thoughtful responses that help you process emotions and gain new perspectives.
+              </p>
+            </div>
           </div>
-        </section>
+        </div>
+      </section>
+
+            {/* FAQ Section */}
+      <section className="py-16 px-5 bg-white dark:bg-black" style={{backgroundColor: isDarkMode ? '#000000' : '#FFFFFF'}}>
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white">Frequently Asked Questions</h2>
+          <FAQAccordion items={faqItems} />
+        </div>
+      </section>
+
 
         {/* CTA Section */}
-        <section className="py-16 px-5">
+        <section className="py-16 px-5 bg-white dark:bg-black">
           <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl font-bold mb-4">Start Your Journey Today</h2>
+            <h2 className="text-3xl font-bold mb-4 text-gray-900 dark:text-white">Start Your Journey Today</h2>
             <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
               Begin with 3 free sessions and experience the support that thousands already trust.
             </p>
@@ -208,7 +221,7 @@ const IndexPage: React.FC = () => {
         </section>
 
         {/* Footer */}
-        <footer className="py-10 px-5 border-t border-gray-200 dark:border-gray-800">
+        <footer className="py-10 px-5 border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-black">
           <div className="max-w-6xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
               <div>
@@ -220,24 +233,24 @@ const IndexPage: React.FC = () => {
               </div>
               
               <div>
-                <h3 className="font-semibold mb-4">Quick Links</h3>
+                <h3 className="font-semibold mb-4 text-gray-900 dark:text-white">Quick Links</h3>
                 <nav>
                   <ul className="space-y-2">
-                    <li><button onClick={handleBeginSession} className="hover:underline">Start Session</button></li>
-                    <li><button onClick={() => router.push('/pricing')} className="hover:underline">Pricing</button></li>
-                    <li><button onClick={() => router.push('/about')} className="hover:underline">About</button></li>
-                    <li><button onClick={() => router.push('/contact')} className="hover:underline">Contact</button></li>
+                    <li><button onClick={handleBeginSession} className="hover:underline text-gray-600 dark:text-gray-300">Start Session</button></li>
+                    <li><button onClick={() => router.push('/pricing')} className="hover:underline text-gray-600 dark:text-gray-300">Pricing</button></li>
+                    <li><button onClick={() => router.push('/about')} className="hover:underline text-gray-600 dark:text-gray-300">About</button></li>
+                    <li><button onClick={() => router.push('/contact')} className="hover:underline text-gray-600 dark:text-gray-300">Contact</button></li>
                   </ul>
                 </nav>
               </div>
               
               <div>
-                <h3 className="font-semibold mb-4">Legal</h3>
+                <h3 className="font-semibold mb-4 text-gray-900 dark:text-white">Legal</h3>
                 <nav>
                   <ul className="space-y-2">
-                    <li><button onClick={() => router.push('/privacy-policy')} className="hover:underline">Privacy Policy</button></li>
-                    <li><button onClick={() => router.push('/terms')} className="hover:underline">Terms of Service</button></li>
-                    <li><button onClick={() => router.push('/disclaimer')} className="hover:underline">AI Disclaimer</button></li>
+                    <li><button onClick={() => router.push('/privacy-policy')} className="hover:underline text-gray-600 dark:text-gray-300">Privacy Policy</button></li>
+                    <li><button onClick={() => router.push('/terms')} className="hover:underline text-gray-600 dark:text-gray-300">Terms of Service</button></li>
+                    <li><button onClick={() => router.push('/disclaimer')} className="hover:underline text-gray-600 dark:text-gray-300">AI Disclaimer</button></li>
                   </ul>
                 </nav>
               </div>

@@ -17,6 +17,11 @@
   --bg-secondary: #111111;
 }
 
+/* Add direct body application of dark mode for better consistency */
+body {
+  @apply bg-white dark:bg-black text-gray-900 dark:text-white;
+}
+
 html,
 body {
   padding: 0;
@@ -160,4 +165,122 @@ html {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--calmi-dark);
+}
+
+/* Dark mode overrides for consistent coloring */
+.dark section {
+  @apply bg-black;
+}
+
+.dark .bg-gray-50 {
+  @apply bg-black;
+}
+
+.dark .bg-white {
+  @apply bg-gray-800;
+}
+
+/* Direct background color overrides for dark mode */
+.dark {
+  color-scheme: dark;
+}
+
+.dark body,
+.dark main,
+.dark section,
+.dark div.bg-white {
+  background-color: #000000;
+}
+
+.dark .bg-gray-50,
+.dark .bg-gray-100 {
+  background-color: #000000;
+}
+
+/* Card-specific styles - only apply dark gray to rounded elements */
+.dark .rounded-lg.bg-white,
+.dark .rounded-lg.bg-gray-50,
+.dark .rounded-lg.bg-gray-100 {
+  background-color: #1f1f1f;
+}
+
+/* Force sidebar to be black */
+.dark nav,
+.dark aside,
+.dark .sidebar {
+  background-color: #000000;
+}
+
+/* Fix textarea and input styles */
+.dark textarea,
+.dark input[type="text"],
+.dark input[type="email"],
+.dark input[type="password"] {
+  background-color: #333333;
+  color: white;
+  border-color: #444444;
+}
+
+/* Fix hover styles */
+.dark .hover\:bg-gray-100:hover,
+.dark .hover\:bg-gray-200:hover {
+  background-color: #111111 !important;
+}
+
+/* Fix FAQ section background to be black in dark mode */
+.dark .bg-gray-50.py-16 {
+  background-color: #000000 !important;
+}
+
+/* Add these to the bottom of globals.css */
+
+/* Feature cards with violet border */
+.dark .feature-card,
+.feature-card {
+  border: 1px solid var(--calmi-orange);
+  border-radius: 0.5rem;
+}
+
+/* Light mode feature cards */
+.feature-card {
+  background-color: #FFFFFF;
+}
+
+/* Dark mode feature cards */
+.dark .feature-card {
+  background-color: #000000;
+}
+
+/* FAQ section background */
+.faq-section {
+  background-color: #FFFFFF;
+}
+
+.dark .faq-section {
+  background-color: #000000;
+}
+
+/* Login button styling */
+.login-button {
+  border: 1px solid var(--calmi-orange);
+  border-radius: 0.375rem; /* rounded-md */
+}
+
+.login-button.dark-mode {
+  background-color: #000000;
+  color: #FFFFFF;
+}
+
+.login-button.light-mode {
+  background-color: #FFFFFF;
+  color: #000000;
+}
+
+/* Override Tailwind styles */
+.dark .bg-white {
+  background-color: #000000;
+}
+
+.dark .border-calmi-orange {
+  border-color: var(--calmi-orange);
 }

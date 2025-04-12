@@ -72,9 +72,9 @@ const PricingPage: React.FC = () => {
 
   return (
     <MainLayout>
-      <div className="py-12 px-4 sm:px-6 lg:px-8">
+      <div className="py-12 px-4 sm:px-6 lg:px-8 bg-white dark:bg-black">
         <div className="text-center">
-          <h2 className="text-3xl font-extrabold">
+          <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white">
             Pricing Plans
           </h2>
           <p className="mt-4 max-w-2xl mx-auto text-xl text-gray-500 dark:text-gray-300">
@@ -99,9 +99,9 @@ const PricingPage: React.FC = () => {
               )}
               
               <div className="text-center">
-                <h3 className="text-2xl font-medium">{plan.name}</h3>
-                <div className="mt-4 flex justify-center">
-                  <span className="text-5xl font-extrabold">{plan.price}</span>
+                <h3 className="text-2xl font-medium text-gray-900 dark:text-white">{plan.name}</h3>
+                <div className="mt-4 flex justify-center items-baseline">
+                  <span className="text-5xl font-extrabold text-gray-900 dark:text-white">{plan.price}</span>
                   {plan.interval && (
                     <span className="ml-1 text-xl font-medium text-gray-500 dark:text-gray-400 self-end">
                       /{plan.interval}
@@ -117,7 +117,7 @@ const PricingPage: React.FC = () => {
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                         </svg>
                       </div>
-                      <p className="ml-3 text-base text-gray-500 dark:text-gray-400">
+                      <p className="ml-3 text-base text-gray-500 dark:text-gray-300">
                         {feature}
                       </p>
                     </li>
@@ -127,7 +127,7 @@ const PricingPage: React.FC = () => {
                 <div className="mt-8">
                   {plan.current ? (
                     <div className="rounded-md shadow">
-                      <span className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md bg-gray-200 dark:bg-gray-700">
+                      <span className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
                         {remainingSessions}/3 sessions remaining
                       </span>
                     </div>

@@ -55,7 +55,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
 
   return (
     <div className="w-full max-w-md p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
-      <h2 className="text-2xl font-semibold mb-6 text-center">Create an Account</h2>
+      <h2 className="text-2xl font-semibold mb-6 text-center text-gray-900 dark:text-white">Create an Account</h2>
       
       {error && (
         <div className="mb-4 p-3 bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-100 rounded-md text-sm">
@@ -65,7 +65,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
       
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
-          <label htmlFor="fullName" className="block text-sm font-medium mb-1">
+          <label htmlFor="fullName" className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
             Full Name
           </label>
           <input
@@ -73,12 +73,12 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
             type="text"
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
-            className="text-black w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-calmi-orange focus:border-transparent"
+            className="text-black dark:text-white w-full p-2 border dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-calmi-orange focus:border-transparent dark:bg-gray-700"
           />
         </div>
         
         <div className="mb-4">
-          <label htmlFor="email" className="block text-sm font-medium mb-1">
+          <label htmlFor="email" className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
             Email
           </label>
           <input
@@ -86,13 +86,13 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="text-black w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-calmi-orange focus:border-transparent"
+            className="text-black dark:text-white w-full p-2 border dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-calmi-orange focus:border-transparent dark:bg-gray-700"
             required
           />
         </div>
         
         <div className="mb-6">
-          <label htmlFor="password" className="block text-sm font-medium mb-1">
+          <label htmlFor="password" className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
             Password
           </label>
           <input
@@ -100,7 +100,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="text-black w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-calmi-orange focus:border-transparent"
+            className="text-black dark:text-white w-full p-2 border dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-calmi-orange focus:border-transparent dark:bg-gray-700"
             required
           />
           <div className="mt-1 text-xs text-gray-500 dark:text-gray-400">
@@ -117,7 +117,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
         </Button>
         
         {onToggleMode && (
-          <div className="text-center mt-4 text-sm">
+          <div className="text-center mt-4 text-sm text-gray-600 dark:text-gray-300">
             Already have an account?{' '}
             <button
               type="button"
