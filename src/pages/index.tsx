@@ -109,7 +109,7 @@ const IndexPage: React.FC = () => {
 
 
       {/* Hero Section */}
-      <section className="relative pt-24 pb-16 md:pt-32 md:pb-32 px-5 bg-white dark:bg-black dark-bg-force force-bg-black" style={{backgroundColor: isDarkMode ? '#000000' : '#FFFFFF'}}>
+      <section className="relative pt-24 pb-36 md:pt-32 md:pb-32 px-5 bg-white dark:bg-black dark-bg-force force-bg-black" style={{backgroundColor: isDarkMode ? '#000000' : '#FFFFFF'}}>
         <div className="max-w-5xl mx-auto">
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div>
@@ -117,8 +117,8 @@ const IndexPage: React.FC = () => {
                 Talk through your problems with ease.
               </h2>
               <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-8">
-                No high fees, no wait times, no downloads, no hassle— 
-                just support with an empathetic AI whenever and wherever you need it.
+                {/* No high fees, no wait times, no downloads, no hassle— 
+                just support with an empathetic AI whenever and wherever you need it. */}
               </p>
               <button 
                 onClick={handleBeginSession}
