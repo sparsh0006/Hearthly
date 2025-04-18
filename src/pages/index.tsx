@@ -124,7 +124,7 @@ const IndexPage: React.FC = () => {
                 onClick={handleBeginSession}
                 className="px-6 py-3 rounded-md bg-calmi-orange text-black font-medium hover:opacity-90 transition-opacity"
               >
-                begin 1st session
+                begin session
               </button>
             </div>
             
